@@ -1,4 +1,4 @@
-# S5ring 5 Course (from SpringFramework Guru)
+# Spring 5 Course (from SpringFramework Guru)
 
 
 This is a repository to store all the source code created during the following of the following course :
