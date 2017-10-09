@@ -1,5 +1,5 @@
 package org.libermundi.chuck.services;
 
-public interface JokeSource {
+public interface JokeService {
     String getRandomQuote();
 }
