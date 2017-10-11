@@ -1,15 +1,13 @@
 package org.libermundi.didemo.services;
 
-import org.springframework.context.annotation.Primary;
-import org.springframework.context.annotation.Profile;
-import org.springframework.stereotype.Service;
-
-@Primary
-@Service
-@Profile({"en","default"})
 public class PrimaryGreetingService implements GreetingService {
+    private GreetingRepository greetingRepository;
+    public PrimaryGreetingService(GreetingRepository greetingRepository) {
+        this.greetingRepository=greetingRepository;
+    }
+
     @Override
     public String sayGreetings() {
-        return "Hello from English Primary Service";
+        return this.greetingRepository.getEnglishGreeting();
     }
 }
