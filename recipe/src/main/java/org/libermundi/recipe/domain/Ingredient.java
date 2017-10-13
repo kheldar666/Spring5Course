@@ -17,6 +17,9 @@ public class Ingredient extends Identity {
     @ManyToOne
     private Recipe recipe;
 
+    public Ingredient() {
+    }
+
     public String getDescription() {
         return description;
     }

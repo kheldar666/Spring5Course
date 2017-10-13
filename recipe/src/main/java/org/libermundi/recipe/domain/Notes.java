@@ -9,6 +9,9 @@ public class Notes extends Identity {
     @Lob
     private String notes;
 
+    public Notes() {
+    }
+
     public String getNotes() {
         return notes;
     }

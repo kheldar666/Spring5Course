@@ -27,6 +27,9 @@ public class Recipe extends Identity{
     @ManyToMany(cascade = CascadeType.ALL)
     private Set<Category> categories;
 
+    public Recipe() {
+    }
+
     public int getPrepTime() {
         return prepTime;
     }

@@ -11,6 +11,9 @@ public class Category extends Identity {
     @ManyToMany(mappedBy = "categories")
     private Set<Recipe> recipes;
 
+    public Category() {
+    }
+
     public Category(String name) {
         this.name = name;
     }

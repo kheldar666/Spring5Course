@@ -6,6 +6,9 @@ import javax.persistence.Entity;
 public class UnitOfMeasure extends Identity{
     private String name;
 
+    public UnitOfMeasure() {
+    }
+
     public UnitOfMeasure(String name) {
         this.name = name;
     }
