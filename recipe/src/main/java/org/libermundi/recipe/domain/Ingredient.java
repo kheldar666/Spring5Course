@@ -20,6 +20,13 @@ public class Ingredient extends Identity {
     public Ingredient() {
     }
 
+    public Ingredient(String description, BigDecimal amount, UnitOfMeasure units, Recipe recipe) {
+        this.description = description;
+        this.amount = amount;
+        this.units = units;
+        this.recipe = recipe;
+    }
+
     public String getDescription() {
         return description;
     }

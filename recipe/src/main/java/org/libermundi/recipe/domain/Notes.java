@@ -12,6 +12,10 @@ public class Notes extends Identity {
     public Notes() {
     }
 
+    public Notes(String notes) {
+        this.notes = notes;
+    }
+
     public String getNotes() {
         return notes;
     }

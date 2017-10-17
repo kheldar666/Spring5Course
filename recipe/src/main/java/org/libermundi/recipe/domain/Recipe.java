@@ -1,15 +1,20 @@
 package org.libermundi.recipe.domain;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 public class Recipe extends Identity{
+    private String Name;
     private int prepTime;
     private int cookTime;
     private int servings;
     private String source;
     private String url;
+
+    @Lob
     private String directions;
 
     @Enumerated(value = EnumType.STRING)
@@ -22,12 +27,16 @@ public class Recipe extends Identity{
     private Notes notes;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
-    private Set<Ingredient> ingredients;
+    private Set<Ingredient> ingredients = new HashSet<>();
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    private Set<Category> categories;
+    @ManyToMany
+    private Set<Category> categories = new HashSet<>();
 
     public Recipe() {
+    }
+
+    public Recipe(String name) {
+        Name = name;
     }
 
     public int getPrepTime() {
@@ -116,5 +125,12 @@ public class Recipe extends Identity{
 
     public void setCategories(Set<Category> categories) {
         this.categories = categories;
+    }
+
+    @Override
+    public String toString() {
+        return "Recipe{" +
+                "Name='" + Name + '\'' +
+                "} " + super.toString();
     }
 }

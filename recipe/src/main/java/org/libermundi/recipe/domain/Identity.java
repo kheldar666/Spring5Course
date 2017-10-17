@@ -4,6 +4,7 @@ import org.libermundi.recipe.listeners.IdentityListener;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.UUID;
 
 @MappedSuperclass
 @EntityListeners(IdentityListener.class)
@@ -15,6 +16,9 @@ public abstract class Identity {
     private Date created;
 
     private Date updated;
+
+    @Transient
+    private UUID uuid = UUID.randomUUID();
 
     public Long getId() {
         return id;
@@ -47,12 +51,12 @@ public abstract class Identity {
 
         Identity identity = (Identity) o;
 
-        return id != null ? id.equals(identity.id) : identity.id == null;
+        return id != null ? id.equals(identity.id) : uuid.equals(identity.uuid);
     }
 
     @Override
     public int hashCode() {
-        return id != null ? id.hashCode() : 0;
+        return id != null ? id.hashCode() : uuid.hashCode();
     }
 
     @Override
