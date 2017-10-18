@@ -10,7 +10,6 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -114,14 +113,14 @@ public class ApplicationLoader implements ApplicationListener<ContextRefreshedEv
 
 
 
-            guacamole.getIngredients().add(new Ingredient("ripe avocado", new BigDecimal("2"),unitOfMeasureRepository.findByUnit("none").get(),guacamole));
-            guacamole.getIngredients().add(new Ingredient("Kosher salt", new BigDecimal("0.5"),unitOfMeasureRepository.findByUnit("Tsp").get(),guacamole));
-            guacamole.getIngredients().add(new Ingredient("fresh lime juice", new BigDecimal("1"),unitOfMeasureRepository.findByUnit("Tbsp").get(),guacamole));
-            guacamole.getIngredients().add(new Ingredient("minced red onion or thinly sliced green onion", new BigDecimal("2"),unitOfMeasureRepository.findByUnit("Tbsp").get(),guacamole));
-            guacamole.getIngredients().add(new Ingredient("serrano chiles, stems and seeds removed, minced", new BigDecimal("2"),unitOfMeasureRepository.findByUnit("none").get(),guacamole));
-            guacamole.getIngredients().add(new Ingredient("cilantro (leaves and tender stems), finely chopped", new BigDecimal("2"),unitOfMeasureRepository.findByUnit("Tbsp").get(),guacamole));
-            guacamole.getIngredients().add(new Ingredient("freshly grated black pepper", new BigDecimal("1"),unitOfMeasureRepository.findByUnit("dash").get(),guacamole));
-            guacamole.getIngredients().add(new Ingredient("ripe tomato, seeds and pulp removed, chopped", new BigDecimal("0.5"),unitOfMeasureRepository.findByUnit("none").get(),guacamole));
+            guacamole.addIngredient(new Ingredient("ripe avocado", new BigDecimal("2"),unitOfMeasureRepository.findByUnit("none").get()));
+            guacamole.addIngredient(new Ingredient("Kosher salt", new BigDecimal("0.5"),unitOfMeasureRepository.findByUnit("Tsp").get()));
+            guacamole.addIngredient(new Ingredient("fresh lime juice", new BigDecimal("1"),unitOfMeasureRepository.findByUnit("Tbsp").get()));
+            guacamole.addIngredient(new Ingredient("minced red onion or thinly sliced green onion", new BigDecimal("2"),unitOfMeasureRepository.findByUnit("Tbsp").get()));
+            guacamole.addIngredient(new Ingredient("serrano chiles, stems and seeds removed, minced", new BigDecimal("2"),unitOfMeasureRepository.findByUnit("none").get()));
+            guacamole.addIngredient(new Ingredient("cilantro (leaves and tender stems), finely chopped", new BigDecimal("2"),unitOfMeasureRepository.findByUnit("Tbsp").get()));
+            guacamole.addIngredient(new Ingredient("freshly grated black pepper", new BigDecimal("1"),unitOfMeasureRepository.findByUnit("dash").get()));
+            guacamole.addIngredient(new Ingredient("ripe tomato, seeds and pulp removed, chopped", new BigDecimal("0.5"),unitOfMeasureRepository.findByUnit("none").get()));
 
         recipeRepository.save(guacamole);
 
@@ -159,25 +158,25 @@ public class ApplicationLoader implements ApplicationListener<ContextRefreshedEv
                 "Drizzle with the thinned sour cream. Serve with lime wedges." +
                 "\n\n");
 
-        chicken.getIngredients().add(new Ingredient("ancho chili powder", new BigDecimal("2"), unitOfMeasureRepository.findByUnit("Tbsp").get(),chicken));
-        chicken.getIngredients().add(new Ingredient("dried oregano", new BigDecimal("1"), unitOfMeasureRepository.findByUnit("Tsp").get(),chicken));
-        chicken.getIngredients().add(new Ingredient("dried cumin", new BigDecimal("1"), unitOfMeasureRepository.findByUnit("Tsp").get(),chicken));
-        chicken.getIngredients().add(new Ingredient("sugar", new BigDecimal("1"), unitOfMeasureRepository.findByUnit("Tsp").get(),chicken));
-        chicken.getIngredients().add(new Ingredient("salt", new BigDecimal("1"), unitOfMeasureRepository.findByUnit("Tsp").get(),chicken));
-        chicken.getIngredients().add(new Ingredient("clove garlic, finely chopped", new BigDecimal("1"), unitOfMeasureRepository.findByUnit("none").get(),chicken));
-        chicken.getIngredients().add(new Ingredient("finely grated orange zest", new BigDecimal("1"), unitOfMeasureRepository.findByUnit("Tbsp").get(),chicken));
-        chicken.getIngredients().add(new Ingredient("fresh-squeezed orange juice", new BigDecimal("3"), unitOfMeasureRepository.findByUnit("Tbsp").get(),chicken));
-        chicken.getIngredients().add(new Ingredient("olive oil", new BigDecimal("2"), unitOfMeasureRepository.findByUnit("Tbsp").get(),chicken));
-        chicken.getIngredients().add(new Ingredient("skinless, boneless chicken thighs", new BigDecimal("5"), unitOfMeasureRepository.findByUnit("none").get(),chicken));
-        chicken.getIngredients().add(new Ingredient("small corn tortillas", new BigDecimal("8"), unitOfMeasureRepository.findByUnit("none").get(),chicken));
-        chicken.getIngredients().add(new Ingredient("packed baby arugula", new BigDecimal("3"), unitOfMeasureRepository.findByUnit("cup").get(),chicken));
-        chicken.getIngredients().add(new Ingredient("medium ripe avocados, sliced", new BigDecimal("2"), unitOfMeasureRepository.findByUnit("none").get(),chicken));
-        chicken.getIngredients().add(new Ingredient("radishes, thinly sliced", new BigDecimal("4"), unitOfMeasureRepository.findByUnit("none").get(),chicken));
-        chicken.getIngredients().add(new Ingredient("cherry tomatoes, halved", new BigDecimal("0.5"), unitOfMeasureRepository.findByUnit("pint").get(),chicken));
-        chicken.getIngredients().add(new Ingredient("red onion, thinly sliced", new BigDecimal("0.25"), unitOfMeasureRepository.findByUnit("none").get(),chicken));
-        chicken.getIngredients().add(new Ingredient("Roughly chopped cilantro", new BigDecimal("20"), unitOfMeasureRepository.findByUnit("g").get(),chicken));
-        chicken.getIngredients().add(new Ingredient("sour cream thinned with 1/4 cup milk", new BigDecimal("0.5"), unitOfMeasureRepository.findByUnit("cup").get(),chicken));
-        chicken.getIngredients().add(new Ingredient("lime, cut into wedges", new BigDecimal("1"), unitOfMeasureRepository.findByUnit("none").get(),chicken));
+        chicken.addIngredient(new Ingredient("ancho chili powder", new BigDecimal("2"), unitOfMeasureRepository.findByUnit("Tbsp").get()));
+        chicken.addIngredient(new Ingredient("dried oregano", new BigDecimal("1"), unitOfMeasureRepository.findByUnit("Tsp").get()));
+        chicken.addIngredient(new Ingredient("dried cumin", new BigDecimal("1"), unitOfMeasureRepository.findByUnit("Tsp").get()));
+        chicken.addIngredient(new Ingredient("sugar", new BigDecimal("1"), unitOfMeasureRepository.findByUnit("Tsp").get()));
+        chicken.addIngredient(new Ingredient("salt", new BigDecimal("1"), unitOfMeasureRepository.findByUnit("Tsp").get()));
+        chicken.addIngredient(new Ingredient("clove garlic, finely chopped", new BigDecimal("1"), unitOfMeasureRepository.findByUnit("none").get()));
+        chicken.addIngredient(new Ingredient("finely grated orange zest", new BigDecimal("1"), unitOfMeasureRepository.findByUnit("Tbsp").get()));
+        chicken.addIngredient(new Ingredient("fresh-squeezed orange juice", new BigDecimal("3"), unitOfMeasureRepository.findByUnit("Tbsp").get()));
+        chicken.addIngredient(new Ingredient("olive oil", new BigDecimal("2"), unitOfMeasureRepository.findByUnit("Tbsp").get()));
+        chicken.addIngredient(new Ingredient("skinless, boneless chicken thighs", new BigDecimal("5"), unitOfMeasureRepository.findByUnit("none").get()));
+        chicken.addIngredient(new Ingredient("small corn tortillas", new BigDecimal("8"), unitOfMeasureRepository.findByUnit("none").get()));
+        chicken.addIngredient(new Ingredient("packed baby arugula", new BigDecimal("3"), unitOfMeasureRepository.findByUnit("cup").get()));
+        chicken.addIngredient(new Ingredient("medium ripe avocados, sliced", new BigDecimal("2"), unitOfMeasureRepository.findByUnit("none").get()));
+        chicken.addIngredient(new Ingredient("radishes, thinly sliced", new BigDecimal("4"), unitOfMeasureRepository.findByUnit("none").get()));
+        chicken.addIngredient(new Ingredient("cherry tomatoes, halved", new BigDecimal("0.5"), unitOfMeasureRepository.findByUnit("pint").get()));
+        chicken.addIngredient(new Ingredient("red onion, thinly sliced", new BigDecimal("0.25"), unitOfMeasureRepository.findByUnit("none").get()));
+        chicken.addIngredient(new Ingredient("Roughly chopped cilantro", new BigDecimal("20"), unitOfMeasureRepository.findByUnit("g").get()));
+        chicken.addIngredient(new Ingredient("sour cream thinned with 1/4 cup milk", new BigDecimal("0.5"), unitOfMeasureRepository.findByUnit("cup").get()));
+        chicken.addIngredient(new Ingredient("lime, cut into wedges", new BigDecimal("1"), unitOfMeasureRepository.findByUnit("none").get()));
 
 
         recipeRepository.save(chicken);

@@ -1,7 +1,6 @@
 package org.libermundi.recipe.domain;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -36,6 +35,14 @@ public class Recipe extends Identity{
     }
 
     public Recipe(String name) {
+        Name = name;
+    }
+
+    public String getName() {
+        return Name;
+    }
+
+    public void setName(String name) {
         Name = name;
     }
 
@@ -109,6 +116,12 @@ public class Recipe extends Identity{
 
     public void setNotes(Notes notes) {
         this.notes = notes;
+    }
+
+    public Recipe addIngredient(Ingredient ingredient) {
+        ingredient.setRecipe(this);
+        this.ingredients.add(ingredient);
+        return this;
     }
 
     public Set<Ingredient> getIngredients() {
