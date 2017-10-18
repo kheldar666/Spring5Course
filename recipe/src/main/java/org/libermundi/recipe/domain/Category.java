@@ -7,6 +7,7 @@ import javax.persistence.ManyToMany;
 import java.util.Set;
 
 @Data
+@EqualsAndHashCode(exclude = {"recipies"})
 @Entity
 public class Category extends Identity {
     private String name;
@@ -19,6 +20,10 @@ public class Category extends Identity {
 
     public Category(String name) {
         this.name = name;
+    }
+
+    protected boolean canEqual(Object other) {
+        return other instanceof Category;
     }
 
 }

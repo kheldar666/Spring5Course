@@ -21,5 +21,4 @@ public abstract class Identity {
 
     @Transient
     private UUID uuid = UUID.randomUUID();
-
 }
