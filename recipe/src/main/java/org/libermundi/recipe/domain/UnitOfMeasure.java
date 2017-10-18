@@ -1,7 +1,10 @@
 package org.libermundi.recipe.domain;
 
+import lombok.*;
+
 import javax.persistence.Entity;
 
+@Data
 @Entity
 public class UnitOfMeasure extends Identity{
     private String name;
@@ -16,27 +19,4 @@ public class UnitOfMeasure extends Identity{
         this.unit = unit;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getUnit() {
-        return unit;
-    }
-
-    public void setUnit(String unit) {
-        this.unit = unit;
-    }
-
-    @Override
-    public String toString() {
-        return "UnitOfMeasure{" +
-                "name='" + name + '\'' +
-                ", unit='" + unit + '\'' +
-                "} " + super.toString();
-    }
 }

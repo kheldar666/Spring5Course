@@ -1,8 +1,11 @@
 package org.libermundi.recipe.domain;
 
+import lombok.*;
+
 import javax.persistence.Entity;
 import javax.persistence.Lob;
 
+@Data
 @Entity
 public class Notes extends Identity {
 
@@ -16,11 +19,4 @@ public class Notes extends Identity {
         this.notes = notes;
     }
 
-    public String getNotes() {
-        return notes;
-    }
-
-    public void setNotes(String notes) {
-        this.notes = notes;
-    }
 }
