@@ -34,7 +34,6 @@ public class ApplicationLoader implements ApplicationListener<ContextRefreshedEv
         if(categoryRepository.count() == 0){
             initData();
         }
-
     }
 
     private void initData() {
