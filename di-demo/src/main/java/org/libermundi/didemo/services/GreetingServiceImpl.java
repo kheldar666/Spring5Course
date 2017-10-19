@@ -8,6 +8,6 @@ public class GreetingServiceImpl implements GreetingService {
 
     @Override
     public String sayGreetings() {
-        return HELLO_GURUS + " - from Basic Greeting Service";
+        return HELLO_GURUS ;
     }
 }
