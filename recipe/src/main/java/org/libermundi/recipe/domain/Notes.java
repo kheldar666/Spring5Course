@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.Lob;
 
 @Data
+@EqualsAndHashCode(callSuper = true)
 @Entity
 public class Notes extends Identity {
 

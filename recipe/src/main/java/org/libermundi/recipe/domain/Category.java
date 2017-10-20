@@ -7,7 +7,7 @@ import javax.persistence.ManyToMany;
 import java.util.Set;
 
 @Data
-@EqualsAndHashCode(exclude = {"recipies"})
+@EqualsAndHashCode(exclude = {"recipies"},callSuper = true)
 @Entity
 public class Category extends Identity {
     private String name;

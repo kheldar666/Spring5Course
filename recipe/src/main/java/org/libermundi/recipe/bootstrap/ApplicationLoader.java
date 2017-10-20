@@ -64,9 +64,9 @@ public class ApplicationLoader implements ApplicationListener<ContextRefreshedEv
 
 
         Recipe guacamole = new Recipe("Perfect Guacamole");
-            guacamole.setPrepTime(10);
-            guacamole.setCookTime(0);
-            guacamole.setServings(4);
+            guacamole.setPrepTime(Integer.valueOf(10));
+            guacamole.setCookTime(Integer.valueOf(0));
+            guacamole.setServings(Integer.valueOf(4));
             guacamole.setDifficulty(Difficulty.EASY);
             guacamole.getCategories().add(categoryRepository.findByName("Mexican").get());
             guacamole.getCategories().add(categoryRepository.findByName("American").get());
@@ -128,10 +128,10 @@ public class ApplicationLoader implements ApplicationListener<ContextRefreshedEv
         recipeRepository.save(guacamole);
 
         Recipe chicken = new Recipe("Spicy Grilled Chicken Tacos");
-        chicken.setPrepTime(20);
-        chicken.setCookTime(15);
+        chicken.setPrepTime(Integer.valueOf(20));
+        chicken.setCookTime(Integer.valueOf(15));
         chicken.setDifficulty(Difficulty.MODERATE);
-        chicken.setServings(6);
+        chicken.setServings(Integer.valueOf(6));
         chicken.setSource("Simply Recipes");
         chicken.setUrl("http://www.simplyrecipes.com/recipes/spicy_grilled_chicken_tacos/");
 

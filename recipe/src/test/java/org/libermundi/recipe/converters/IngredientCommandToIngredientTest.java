@@ -50,11 +50,13 @@ public class IngredientCommandToIngredientTest {
     @Test
     public void convert() throws Exception {
         Ingredient ingredient = converter.convert(ingredientCommand);
+        Ingredient ingredient2 = converter.convert(ingredientCommand);
 
         assertEquals(ID,ingredient.getId());
         assertEquals(DESCRIPTION,ingredient.getDescription());
         assertEquals(AMOUNT,ingredient.getAmount());
         assertEquals(UOM_ID,ingredient.getUnit().getId());
+        assertEquals(ingredient,ingredient2);
 
     }
 

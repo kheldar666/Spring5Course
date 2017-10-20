@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Data
-@EqualsAndHashCode(exclude = {"categories"})
+@EqualsAndHashCode(exclude = {"categories"},callSuper = true)
 @Entity
 public class Recipe extends Identity{
     private String name;
