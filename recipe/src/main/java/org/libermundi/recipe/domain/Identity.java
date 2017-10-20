@@ -8,7 +8,6 @@ import java.util.Date;
 import java.util.UUID;
 
 @Data
-@EqualsAndHashCode(exclude = {"uuid"})
 @MappedSuperclass
 @EntityListeners(IdentityListener.class)
 public abstract class Identity {
@@ -20,6 +19,4 @@ public abstract class Identity {
 
     private Date updated;
 
-    @Transient
-    private UUID uuid = UUID.randomUUID();
 }
