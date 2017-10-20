@@ -3,7 +3,6 @@ package org.libermundi.recipe.commands;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.libermundi.recipe.domain.UnitOfMeasure;
 
 import java.math.BigDecimal;
 
@@ -14,5 +13,5 @@ public class IngredientCommand {
     private Long id;
     private String description;
     private BigDecimal amount;
-    private UnitOfMeasure unit;
+    private UnitOfMeasureCommand unit;
 }
