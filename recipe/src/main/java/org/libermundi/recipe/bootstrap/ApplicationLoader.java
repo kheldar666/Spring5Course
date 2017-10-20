@@ -66,8 +66,10 @@ public class ApplicationLoader implements ApplicationListener<ContextRefreshedEv
         Recipe guacamole = new Recipe("Perfect Guacamole");
             guacamole.setPrepTime(10);
             guacamole.setCookTime(0);
+            guacamole.setServings(4);
             guacamole.setDifficulty(Difficulty.EASY);
             guacamole.getCategories().add(categoryRepository.findByName("Mexican").get());
+            guacamole.getCategories().add(categoryRepository.findByName("American").get());
             guacamole.setUrl("http://www.simplyrecipes.com/recipes/perfect_guacamole/");
             guacamole.setSource("Simple Recipes");
 
@@ -129,9 +131,11 @@ public class ApplicationLoader implements ApplicationListener<ContextRefreshedEv
         chicken.setPrepTime(20);
         chicken.setCookTime(15);
         chicken.setDifficulty(Difficulty.MODERATE);
-
+        chicken.setServings(6);
         chicken.setSource("Simply Recipes");
         chicken.setUrl("http://www.simplyrecipes.com/recipes/spicy_grilled_chicken_tacos/");
+
+        chicken.getCategories().add(categoryRepository.findByName("Mexican").get());
 
         chicken.setNotes(new Notes("Look for ancho chile powder with the Mexican ingredients at your grocery store, on " +
                 "buy it online. (If you can't find ancho chili powder, you replace the ancho chili, the oregano, " +

@@ -74,7 +74,6 @@ public class IndexControllerTest {
         Iterable<Recipe> iterableInController = argumentCaptor.getValue();
 
         assertEquals(2, Iterables.size(iterableInController));
-        //assertTrue(model.containsAttribute("recipes"));
 
     }
 

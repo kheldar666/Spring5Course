@@ -4,4 +4,6 @@ import org.libermundi.recipe.domain.Recipe;
 
 public interface RecipeService {
     Iterable<Recipe> getAllRecipes();
+    Recipe findById(Long id);
+
 }

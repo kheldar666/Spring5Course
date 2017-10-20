@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Recipe Details</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/4.0.0-beta-1/css/bootstrap.min.css}">
+</head>
+<body>
+<!--/*@thymesVar id="recipe" type="org.libermundi.recipe.domain.Recipe"*/-->
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <h4 class="card-header" th:text="${recipe.name}">The Recipe Name</h4>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <td scope="row"><strong>Categories:</strong></td>
+                                    <td>
+                                        <ul th:remove="all-but-first">
+                                            <li th:each="category : ${recipe.categories}" th:text="${category.name}">Category Name</li>
+                                            <li>Category 1</li>
+                                            <li>Category 2</li>
+                                        </ul>
+                                    </td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td scope="row"><strong>Prep Time:</strong></td>
+                                    <td th:text="${recipe.prepTime + ' mins'}">30 mins</td>
+                                    <td><strong>Difficulty:</strong></td>
+                                    <td th:text="${recipe.difficulty}">Moderate</td>
+                                </tr>
+                                <tr>
+                                    <td scope="row"><strong>Cook Time:</strong></td>
+                                    <td th:text="${recipe.cookTime}">30 mins</td>
+                                    <td><strong>Servings:</strong></td>
+                                    <td th:text="${recipe.servings}">4</td>
+                                </tr>
+                                <tr>
+                                    <td scope="row"><strong>Source:</strong></td>
+                                    <td th:text="${recipe.source}">Somewhere</td>
+                                    <td><strong>URL:</strong></td>
+                                    <td th:text="${recipe.url}">http://www.example.com</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                 </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <h4 class="card-header">Ingredient(s)</h4>
+                <div class="card-body">
+                    <ul th:remove="all-but-first">
+                        <li th:each="ingredient : ${recipe.ingredients}" th:text="${ingredient.description}">Ingredient 3</li>
+                        <li>Ingredient 1</li>
+                        <li>Ingredient 2</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <h4 class="card-header">Directions</h4>
+                <div class="card-body">
+                    <p th:text="${recipe.directions}">How to do this</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <h4 class="card-header">Notes</h4>
+                <div class="card-body">
+                    <p th:text="${recipe.notes.notes}">Some notes</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        th:src="@{/webjars/jquery/3.2.1/jquery.min.js}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"
+        th:src="@{/webjars/popper/1.11.1/dist/umd/popper.min.js}"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.1/js/bootstrap.min.js"
+        th:src="@{/webjars/bootstrap/4.0.0-beta-1/js/bootstrap.min.js}"></script>
+</body>
+</html>
