@@ -22,8 +22,5 @@ public class Category extends Identity {
         this.name = name;
     }
 
-    protected boolean canEqual(Object other) {
-        return other instanceof Category;
-    }
 
 }

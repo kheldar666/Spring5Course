@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.UUID;
 
 @Data
+@EqualsAndHashCode(exclude = {"created","updated"})
 @MappedSuperclass
 @EntityListeners(IdentityListener.class)
 public abstract class Identity {
