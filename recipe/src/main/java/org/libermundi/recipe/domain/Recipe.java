@@ -10,10 +10,10 @@ import java.util.Set;
 @EqualsAndHashCode(exclude = {"categories"})
 @Entity
 public class Recipe extends Identity{
-    private String Name;
-    private int prepTime;
-    private int cookTime;
-    private int servings;
+    private String name;
+    private Integer prepTime;
+    private Integer cookTime;
+    private Integer servings;
     private String source;
     private String url;
 
@@ -24,7 +24,7 @@ public class Recipe extends Identity{
     private Difficulty difficulty;
 
     @Lob
-    private byte[] image;
+    private Byte[] image;
 
     @OneToOne(cascade = CascadeType.ALL)
     private Notes notes;
@@ -39,7 +39,7 @@ public class Recipe extends Identity{
     }
 
     public Recipe(String name) {
-        Name = name;
+        this.name = name;
     }
 
     public Recipe addIngredient(Ingredient ingredient) {

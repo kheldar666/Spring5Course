@@ -15,7 +15,7 @@ public class Ingredient extends Identity {
     private BigDecimal amount;
 
     @OneToOne
-    private UnitOfMeasure units;
+    private UnitOfMeasure unit;
 
     @ManyToOne
     private Recipe recipe;
@@ -23,10 +23,10 @@ public class Ingredient extends Identity {
     public Ingredient() {
     }
 
-    public Ingredient(String description, BigDecimal amount, UnitOfMeasure units) {
+    public Ingredient(String description, BigDecimal amount, UnitOfMeasure unit) {
         this.description = description;
         this.amount = amount;
-        this.units = units;
+        this.unit = unit;
     }
 
 }
