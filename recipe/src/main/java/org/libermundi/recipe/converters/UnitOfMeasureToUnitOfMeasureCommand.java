@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
  * Created by jt on 6/21/17.
  */
 @Component
-public class UnitOfMeasureToUnitOfMeasureCommand implements Converter<UnitOfMeasure, UnitOfMeasureCommand> {
+public class UnitOfMeasureToUnitOfMeasureCommand extends IdentityToIdentityCommand implements Converter<UnitOfMeasure, UnitOfMeasureCommand> {
 
     @Synchronized
     @Nullable
@@ -20,7 +20,9 @@ public class UnitOfMeasureToUnitOfMeasureCommand implements Converter<UnitOfMeas
 
         if (unitOfMeasure != null) {
             final UnitOfMeasureCommand uomc = new UnitOfMeasureCommand();
-            uomc.setId(unitOfMeasure.getId());
+
+            convertIdentity(unitOfMeasure,uomc);
+
             uomc.setName(unitOfMeasure.getName());
             uomc.setUnit(unitOfMeasure.getUnit());
             return uomc;

@@ -5,8 +5,10 @@ import org.libermundi.recipe.commands.IngredientCommand;
 import org.libermundi.recipe.domain.Ingredient;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.lang.Nullable;
+import org.springframework.stereotype.Component;
 
-public class IngredientCommandToIngredient implements Converter<IngredientCommand,Ingredient> {
+@Component
+public class IngredientCommandToIngredient extends IdentityCommandToIdentity implements Converter<IngredientCommand,Ingredient> {
 
     private UnitOfMeasureCommandToUnitOfMeasure unitConverter;
 
@@ -24,7 +26,8 @@ public class IngredientCommandToIngredient implements Converter<IngredientComman
 
         Ingredient ingredient = new Ingredient();
 
-        ingredient.setId(ingredientCommand.getId());
+        convertIdentityCommand(ingredientCommand,ingredient);
+
         ingredient.setDescription(ingredientCommand.getDescription());
         ingredient.setAmount(ingredientCommand.getAmount());
         ingredient.setUnit(unitConverter.convert(ingredientCommand.getUnit()));

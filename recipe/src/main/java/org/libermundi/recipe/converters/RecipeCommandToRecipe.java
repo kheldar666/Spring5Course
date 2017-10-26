@@ -7,10 +7,12 @@ import org.libermundi.recipe.commands.RecipeCommand;
 import org.libermundi.recipe.domain.Recipe;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.lang.Nullable;
+import org.springframework.stereotype.Component;
 
 import java.util.Iterator;
 
-public class RecipeCommandToRecipe implements Converter<RecipeCommand, Recipe> {
+@Component
+public class RecipeCommandToRecipe extends IdentityCommandToIdentity implements Converter<RecipeCommand, Recipe> {
 
     IngredientCommandToIngredient ingredientConverter;
 
@@ -34,7 +36,9 @@ public class RecipeCommandToRecipe implements Converter<RecipeCommand, Recipe> {
         }
 
         Recipe recipe = new Recipe();
-        recipe.setId(recipeCommand.getId());
+
+        convertIdentityCommand(recipeCommand,recipe);
+
         recipe.setName(recipeCommand.getName());
         recipe.setPrepTime(recipeCommand.getPrepTime());
         recipe.setCookTime(recipeCommand.getCookTime());

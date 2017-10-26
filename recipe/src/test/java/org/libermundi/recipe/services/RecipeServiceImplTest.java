@@ -3,10 +3,13 @@ package org.libermundi.recipe.services;
 import com.google.common.collect.Iterables;
 import org.junit.Before;
 import org.junit.Test;
+import org.libermundi.recipe.converters.RecipeCommandToRecipe;
+import org.libermundi.recipe.converters.RecipeToRecipeCommand;
 import org.libermundi.recipe.domain.Recipe;
 import org.libermundi.recipe.repositories.RecipeRepository;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.HashSet;
 import java.util.Optional;
@@ -24,10 +27,16 @@ public class RecipeServiceImplTest {
     @Mock
     RecipeRepository recipeRepository;
 
+    @Mock
+    RecipeToRecipeCommand recipeToRecipeCommand;
+
+    @Mock
+    RecipeCommandToRecipe recipeCommandToRecipe;
+
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-        recipeService = new RecipeServiceImpl(recipeRepository);
+        recipeService = new RecipeServiceImpl(recipeRepository,recipeCommandToRecipe,recipeToRecipeCommand);
     }
 
     @Test

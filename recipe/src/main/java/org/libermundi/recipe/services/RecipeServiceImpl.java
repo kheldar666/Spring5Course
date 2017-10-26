@@ -2,10 +2,14 @@ package org.libermundi.recipe.services;
 
 import com.google.common.collect.Iterators;
 import lombok.extern.slf4j.Slf4j;
+import org.libermundi.recipe.commands.RecipeCommand;
+import org.libermundi.recipe.converters.RecipeCommandToRecipe;
+import org.libermundi.recipe.converters.RecipeToRecipeCommand;
 import org.libermundi.recipe.domain.Recipe;
 import org.libermundi.recipe.repositories.RecipeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -13,10 +17,14 @@ import java.util.Optional;
 @Service
 public class RecipeServiceImpl implements RecipeService {
     private RecipeRepository recipeRepository;
+    private RecipeCommandToRecipe recipeCommandToRecipe;
+    private RecipeToRecipeCommand recipeToRecipeCommand;
 
     @Autowired
-    public RecipeServiceImpl(RecipeRepository recipeRepository) {
+    public RecipeServiceImpl(RecipeRepository recipeRepository, RecipeCommandToRecipe recipeCommandToRecipe, RecipeToRecipeCommand recipeToRecipeCommand) {
         this.recipeRepository = recipeRepository;
+        this.recipeCommandToRecipe = recipeCommandToRecipe;
+        this.recipeToRecipeCommand = recipeToRecipeCommand;
     }
 
     @Override
@@ -39,5 +47,19 @@ public class RecipeServiceImpl implements RecipeService {
         }
 
         return recipeOptional.get();
+    }
+
+    @Override
+    @Transactional
+    public RecipeCommand saveRecipeCommand(RecipeCommand recipeCommand) {
+        Recipe detachedRecipe = recipeCommandToRecipe.convert(recipeCommand);
+
+        Recipe savedRecipe = recipeRepository.save(detachedRecipe);
+
+        if(log.isDebugEnabled()){
+            log.debug("Save recipe : " + savedRecipe);
+        }
+
+        return recipeToRecipeCommand.convert(savedRecipe);
     }
 }

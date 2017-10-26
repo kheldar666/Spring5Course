@@ -5,8 +5,10 @@ import org.libermundi.recipe.commands.NotesCommand;
 import org.libermundi.recipe.domain.Notes;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.lang.Nullable;
+import org.springframework.stereotype.Component;
 
-public class NotesCommandToNotes implements Converter<NotesCommand, Notes> {
+@Component
+public class NotesCommandToNotes extends IdentityCommandToIdentity implements Converter<NotesCommand, Notes> {
     @Nullable
     @Override
     @Synchronized
@@ -16,7 +18,9 @@ public class NotesCommandToNotes implements Converter<NotesCommand, Notes> {
         }
 
         Notes notes = new Notes();
-        notes.setId(notesCommand.getId());
+
+        convertIdentityCommand(notesCommand,notes);
+
         notes.setNotes(notesCommand.getNotes());
 
         return notes;

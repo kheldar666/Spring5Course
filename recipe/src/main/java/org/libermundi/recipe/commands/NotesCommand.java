@@ -8,7 +8,6 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class NotesCommand {
-    private Long id;
+public class NotesCommand extends IdentityCommand  {
     private String notes;
 }

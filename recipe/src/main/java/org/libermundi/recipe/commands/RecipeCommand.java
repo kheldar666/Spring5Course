@@ -1,8 +1,6 @@
 package org.libermundi.recipe.commands;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.libermundi.recipe.domain.Difficulty;
 
 import java.util.HashSet;
@@ -11,8 +9,9 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
-public class RecipeCommand {
-    private Long id;
+@ToString(exclude = {"categories","ingredients","notes","image","directions"})
+@EqualsAndHashCode(exclude = {"categories","ingredients","notes"})
+public class RecipeCommand extends IdentityCommand  {
     private String name;
     private Integer prepTime;
     private Integer cookTime;

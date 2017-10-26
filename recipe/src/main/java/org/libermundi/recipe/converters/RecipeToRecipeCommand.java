@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
  * Created by jt on 6/21/17.
  */
 @Component
-public class RecipeToRecipeCommand implements Converter<Recipe, RecipeCommand> {
+public class RecipeToRecipeCommand extends IdentityToIdentityCommand implements Converter<Recipe, RecipeCommand> {
 
     private final CategoryToCategoryCommand categoryConveter;
     private final IngredientToIngredientCommand ingredientConverter;
@@ -28,33 +28,35 @@ public class RecipeToRecipeCommand implements Converter<Recipe, RecipeCommand> {
     @Synchronized
     @Nullable
     @Override
-    public RecipeCommand convert(Recipe source) {
-        if (source == null) {
+    public RecipeCommand convert(Recipe recipe) {
+        if (recipe == null) {
             return null;
         }
 
-        final RecipeCommand command = new RecipeCommand();
-        command.setId(source.getId());
-        command.setCookTime(source.getCookTime());
-        command.setPrepTime(source.getPrepTime());
-        command.setName(source.getName());
-        command.setDifficulty(source.getDifficulty());
-        command.setDirections(source.getDirections());
-        command.setServings(source.getServings());
-        command.setSource(source.getSource());
-        command.setUrl(source.getUrl());
-        command.setNotes(notesConverter.convert(source.getNotes()));
+        final RecipeCommand recipeCommand = new RecipeCommand();
 
-        if (source.getCategories() != null && source.getCategories().size() > 0){
-            source.getCategories()
-                    .forEach((Category category) -> command.getCategories().add(categoryConveter.convert(category)));
+        convertIdentity(recipe,recipeCommand);
+
+        recipeCommand.setCookTime(recipe.getCookTime());
+        recipeCommand.setPrepTime(recipe.getPrepTime());
+        recipeCommand.setName(recipe.getName());
+        recipeCommand.setDifficulty(recipe.getDifficulty());
+        recipeCommand.setDirections(recipe.getDirections());
+        recipeCommand.setServings(recipe.getServings());
+        recipeCommand.setSource(recipe.getSource());
+        recipeCommand.setUrl(recipe.getUrl());
+        recipeCommand.setNotes(notesConverter.convert(recipe.getNotes()));
+
+        if (recipe.getCategories() != null && recipe.getCategories().size() > 0){
+            recipe.getCategories()
+                    .forEach((Category category) -> recipeCommand.getCategories().add(categoryConveter.convert(category)));
         }
 
-        if (source.getIngredients() != null && source.getIngredients().size() > 0){
-            source.getIngredients()
-                    .forEach(ingredient -> command.getIngredients().add(ingredientConverter.convert(ingredient)));
+        if (recipe.getIngredients() != null && recipe.getIngredients().size() > 0){
+            recipe.getIngredients()
+                    .forEach(ingredient -> recipeCommand.getIngredients().add(ingredientConverter.convert(ingredient)));
         }
 
-        return command;
+        return recipeCommand;
     }
 }

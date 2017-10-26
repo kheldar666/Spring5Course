@@ -5,8 +5,10 @@ import org.libermundi.recipe.commands.CategoryCommand;
 import org.libermundi.recipe.domain.Category;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.lang.Nullable;
+import org.springframework.stereotype.Component;
 
-public class CategoryToCategoryCommand implements Converter<Category,CategoryCommand> {
+@Component
+public class CategoryToCategoryCommand extends IdentityToIdentityCommand implements Converter<Category,CategoryCommand> {
     @Nullable
     @Override
     @Synchronized
@@ -15,7 +17,9 @@ public class CategoryToCategoryCommand implements Converter<Category,CategoryCom
             return null;
         }
         final CategoryCommand categoryCommand = new CategoryCommand();
-            categoryCommand.setId(category.getId());
+
+            convertIdentity(category,categoryCommand);
+
             categoryCommand.setName(category.getName());
 
         return categoryCommand;

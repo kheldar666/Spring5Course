@@ -8,7 +8,8 @@ import javax.persistence.OneToOne;
 import java.math.BigDecimal;
 
 @Data
-@EqualsAndHashCode(exclude = {"recipe"},callSuper = true)
+@ToString(exclude = {"recipe","unit"},callSuper = true)
+@EqualsAndHashCode(exclude = {"recipe","unit"},callSuper = true)
 @Entity
 public class Ingredient extends Identity {
     private String description;

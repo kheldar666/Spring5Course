@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
  * Created by jt on 6/21/17.
  */
 @Component
-public class IngredientToIngredientCommand implements Converter<Ingredient, IngredientCommand> {
+public class IngredientToIngredientCommand extends IdentityToIdentityCommand implements Converter<Ingredient, IngredientCommand> {
 
     private final UnitOfMeasureToUnitOfMeasureCommand uomConverter;
 
@@ -28,7 +28,9 @@ public class IngredientToIngredientCommand implements Converter<Ingredient, Ingr
         }
 
         IngredientCommand ingredientCommand = new IngredientCommand();
-        ingredientCommand.setId(ingredient.getId());
+
+        convertIdentity(ingredient,ingredientCommand);
+
         ingredientCommand.setAmount(ingredient.getAmount());
         ingredientCommand.setDescription(ingredient.getDescription());
         ingredientCommand.setUnit(uomConverter.convert(ingredient.getUnit()));

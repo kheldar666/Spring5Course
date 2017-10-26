@@ -7,8 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class UnitOfMeasureCommand {
-    private Long id;
+public class UnitOfMeasureCommand extends IdentityCommand  {
     private String name;
     private String unit;
 }

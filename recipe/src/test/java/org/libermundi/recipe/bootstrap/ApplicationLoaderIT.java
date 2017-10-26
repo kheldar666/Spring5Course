@@ -33,6 +33,8 @@ public class ApplicationLoaderIT {
         assertNotNull(guacamole.get());
         assertEquals(2,Iterators.size(guacamole.get().getCategories().iterator()));
         assertEquals(8,Iterators.size(guacamole.get().getIngredients().iterator()));
+        assertNotNull(guacamole.get().getCreated());
+        assertNotNull(guacamole.get().getUpdated());
     }
 
 }
