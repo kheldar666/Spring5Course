@@ -60,7 +60,8 @@
                 <h4 class="card-header">Ingredient(s)</h4>
                 <div class="card-body">
                     <ul th:remove="all-but-first">
-                        <li th:each="ingredient : ${recipe.ingredients}" th:text="${ingredient.description}">Ingredient 1</li>
+                        <li th:each="ingredient : ${recipe.ingredients}" th:text="${(ingredient.amount + ' '
+                            + ingredient.unit.name + ' ' + ingredient.description)}">Ingredient 1</li>
                         <li>Ingredient 2</li>
                         <li>Ingredient 3</li>
                     </ul>
@@ -73,7 +74,7 @@
             <div class="card">
                 <h4 class="card-header">Directions</h4>
                 <div class="card-body">
-                    <p th:text="${recipe.directions}">How to do this</p>
+                    <p th:utext="${#strings.replace(recipe.directions, T(org.apache.commons.lang3.StringUtils).LF, '&lt;br /&gt;')}">How to do this</p>
                 </div>
             </div>
         </div>
@@ -83,7 +84,7 @@
             <div class="card">
                 <h4 class="card-header">Notes</h4>
                 <div class="card-body">
-                    <p th:text="${recipe.notes.notes}">Some notes</p>
+                    <p th:utext="${#strings.replace(recipe.notes.notes, T(org.apache.commons.lang3.StringUtils).LF, '&lt;br /&gt;')}">Some notes</p>
                 </div>
             </div>
         </div>
