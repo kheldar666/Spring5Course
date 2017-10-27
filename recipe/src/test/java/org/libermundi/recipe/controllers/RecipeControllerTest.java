@@ -2,6 +2,7 @@ package org.libermundi.recipe.controllers;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.libermundi.recipe.converters.RecipeToRecipeCommand;
 import org.libermundi.recipe.domain.Recipe;
 import org.libermundi.recipe.services.RecipeService;
 import org.mockito.ArgumentCaptor;
@@ -28,12 +29,15 @@ public class RecipeControllerTest {
     RecipeService recipeService;
 
     @Mock
+    RecipeToRecipeCommand recipeToRecipeCommand;
+
+    @Mock
     Model model;
 
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-        recipeController = new RecipeController(recipeService);
+        recipeController = new RecipeController(recipeService,recipeToRecipeCommand);
     }
 
 
