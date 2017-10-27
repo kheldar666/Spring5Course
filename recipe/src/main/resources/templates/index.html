@@ -7,6 +7,7 @@
             integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous"
             th:href="@{/webjars/bootstrap/4.0.0-beta-1/css/bootstrap.min.css}">
 </head>
+<!--/*@thymesVar id="recipe" type="org.libermundi.recipe.domain.Recipe"*/-->
 <body>
     <div class="container-fluid">
         <div class="row justify-content-center">
@@ -20,24 +21,33 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Name</th>
-                                    <th>View</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tr th:remove="all">
                                 <td>123</td>
                                 <td>Tasty goodness 1</td>
-                                <td><a href="#">View</a></td>
+                                <td>
+                                    <a href="#">View</a>
+                                    <a href="#">View</a>
+                                </td>
                             </tr>
                             <tr th:remove="all">
                                 <td>123</td>
                                 <td>Tasty goodness 2</td>
-                                <td><a href="#">View</a></td>
+                                <td>
+                                    <a href="#">View</a>
+                                    <a href="#">View</a>
+                                </td>
                             </tr>
-                            <!--/*@thymesVar id="recipe" type="org.libermundi.recipe.domain.Recipe"*/-->
+
                             <tr th:each="recipe : ${recipes}">
                                 <td th:text="${recipe.id}">123</td>
                                 <td th:text="${recipe.name}">Tasty goodness 3</td>
-                                <td><a href="#" th:href="@{'/recipe/show/' + ${recipe.id}}">View</a></td>
+                                <td>
+                                    <a href="#" th:href="@{'/recipe/show/' + ${recipe.id}}">View</a>
+                                    <a href="#" th:href="@{'/recipe/edit/' + ${recipe.id}}">Edit</a>
+                                </td>
                             </tr>
                         </table>
                       </div>
