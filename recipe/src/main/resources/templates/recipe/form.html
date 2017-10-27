@@ -84,9 +84,11 @@
             </div>
         </div>
         <div class="card mt-4">
-            <div class="card-body">
-
+            <div class="card-body text-right">
                 <button type="submit" class="btn btn-primary">Save</button>
+                <button type="reset" class="btn btn-warning">Reset</button>
+                <a name="cancel" id="cancel" class="btn btn-secondary" th:href="${cancelUrl}" role="button">Cancel</a>
+
             </div>
         </div>
     </form>

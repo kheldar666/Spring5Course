@@ -33,14 +33,18 @@ public class RecipeController {
 
     @RequestMapping("/recipe/edit/{id}")
     public String edit(Model model, @PathVariable Long id) {
-        model.addAttribute("recipe",getById(id));
+        RecipeCommand command = getById(id);
+        model.addAttribute("recipe",command);
+        model.addAttribute("cancelUrl",getCancelUrl(command));
 
         return "/recipe/form";
     }
 
     @RequestMapping("/recipe/new")
     public String create(Model model) {
-        model.addAttribute("recipe",new RecipeCommand());
+        RecipeCommand command = new RecipeCommand();
+        model.addAttribute("recipe",command);
+        model.addAttribute("cancelUrl",getCancelUrl(command));
 
         return "/recipe/form";
     }
@@ -53,8 +57,17 @@ public class RecipeController {
         return "redirect:/recipe/show/" + savedRecipeCommand.getId();
     }
 
+
+    private String getCancelUrl(RecipeCommand command){
+            if(command.getId() == null) {
+                return "/";
+            }
+            return "/recipe/show/" + command.getId();
+    }
+
+
+
     private RecipeCommand getById(Long id) {
         return recipeToRecipeCommand.convert(recipeService.findById(id));
     }
-
 }
