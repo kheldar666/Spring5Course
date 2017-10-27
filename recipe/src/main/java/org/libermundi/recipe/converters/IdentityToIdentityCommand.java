@@ -6,7 +6,7 @@ import org.springframework.lang.Nullable;
 
 public abstract class IdentityToIdentityCommand {
     @Nullable
-    public IdentityCommand convertIdentity(Identity identity, IdentityCommand identityCommand) {
+    protected IdentityCommand convertIdentity(Identity identity, IdentityCommand identityCommand) {
 
         if(identity != null) {
             identityCommand.setId(identity.getId());
