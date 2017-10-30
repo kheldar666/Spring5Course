@@ -1,6 +1,9 @@
 package org.libermundi.recipe.services;
 
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Iterators;
 import com.sun.org.apache.bcel.internal.generic.NEW;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.libermundi.recipe.commands.RecipeCommand;
@@ -13,9 +16,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.*;
 
+@Slf4j
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class RecipeServiceImplIT {
@@ -52,6 +55,24 @@ public class RecipeServiceImplIT {
         assertEquals(testRecipe.getCreated(),savedRecipe.getCreated());
         assertEquals(testRecipe.getUpdated(), savedRecipe.getUpdated());
 
+    }
+
+    @Test
+    public void testDeleteARecipe() throws Exception {
+        // Given
+        Iterable<Recipe> recipes = recipeRepository.findAll();
+        Recipe deletedRecipe = recipes.iterator().next();
+
+        log.info("Recipe to Delete : " + deletedRecipe);
+
+
+        // When
+        recipeService.deleteById(deletedRecipe.getId());
+
+        // Then
+        Iterable<Recipe> recipes2 = recipeRepository.findAll();
+        recipes2.forEach(recipe -> assertFalse(recipe.equals(deletedRecipe)));
+        assertTrue(Iterables.size(recipes) == Iterables.size(recipes2)+1);
     }
 
 }

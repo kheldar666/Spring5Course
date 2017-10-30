@@ -7,4 +7,5 @@ public interface RecipeService {
     Iterable<Recipe> getAllRecipes();
     Recipe findById(Long id);
     RecipeCommand saveRecipeCommand(RecipeCommand recipeCommand);
+    void deleteById(Long id);
 }

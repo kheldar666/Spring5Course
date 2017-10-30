@@ -7,6 +7,7 @@ import org.libermundi.recipe.converters.RecipeCommandToRecipe;
 import org.libermundi.recipe.converters.RecipeToRecipeCommand;
 import org.libermundi.recipe.domain.Recipe;
 import org.libermundi.recipe.repositories.RecipeRepository;
+import org.libermundi.recipe.utils.NullAwareBeanUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -53,13 +54,26 @@ public class RecipeServiceImpl implements RecipeService {
     @Transactional
     public RecipeCommand saveRecipeCommand(RecipeCommand recipeCommand) {
         Recipe detachedRecipe = recipeCommandToRecipe.convert(recipeCommand);
+        Recipe mergedRecipe;
 
-        Recipe savedRecipe = recipeRepository.save(detachedRecipe);
+        if(detachedRecipe.getId() != null) {
+            mergedRecipe = recipeRepository.findById(detachedRecipe.getId()).get();
+            NullAwareBeanUtil.copyProperties(detachedRecipe,mergedRecipe);
+        } else {
+            mergedRecipe=detachedRecipe;
+        }
+
+        Recipe savedRecipe = recipeRepository.save(mergedRecipe);
 
         if(log.isDebugEnabled()){
             log.debug("Save recipe : " + savedRecipe);
         }
 
         return recipeToRecipeCommand.convert(savedRecipe);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        recipeRepository.deleteById(id);
     }
 }

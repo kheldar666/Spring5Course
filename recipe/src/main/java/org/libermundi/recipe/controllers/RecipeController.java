@@ -3,6 +3,7 @@ package org.libermundi.recipe.controllers;
 
 import org.libermundi.recipe.commands.RecipeCommand;
 import org.libermundi.recipe.converters.RecipeToRecipeCommand;
+import org.libermundi.recipe.domain.Recipe;
 import org.libermundi.recipe.services.RecipeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -40,6 +41,12 @@ public class RecipeController {
         return "/recipe/form";
     }
 
+    @RequestMapping("/recipe/delete/{id}")
+    public String delete(@PathVariable Long id) {
+        recipeService.deleteById(id);
+        return "redirect:/";
+    }
+
     @RequestMapping("/recipe/new")
     public String create(Model model) {
         RecipeCommand command = new RecipeCommand();
@@ -68,6 +75,8 @@ public class RecipeController {
 
 
     private RecipeCommand getById(Long id) {
-        return recipeToRecipeCommand.convert(recipeService.findById(id));
+        Recipe recipe = recipeService.findById(id);
+        RecipeCommand command = recipeToRecipeCommand.convert(recipe);
+        return command;
     }
 }
