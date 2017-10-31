@@ -1,8 +1,6 @@
 package org.libermundi.recipe.services;
 
 import com.google.common.collect.Iterables;
-import com.google.common.collect.Iterators;
-import com.sun.org.apache.bcel.internal.generic.NEW;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -45,7 +43,7 @@ public class RecipeServiceImplIT {
 
         // When
         recipeCommand.setName(NEW_RECIPE_NAME);
-        RecipeCommand savedRecipe = recipeService.saveRecipeCommand(recipeCommand);
+        RecipeCommand savedRecipe = recipeService.saveRecipe(recipeCommand);
 
         // Then
         assertEquals(NEW_RECIPE_NAME, savedRecipe.getName());

@@ -8,45 +8,43 @@ import org.libermundi.recipe.services.RecipeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class RecipeController {
     private final RecipeService recipeService;
 
-    private final RecipeToRecipeCommand recipeToRecipeCommand;
-
     @Autowired
-    public RecipeController(RecipeService recipeService, RecipeToRecipeCommand recipeToRecipeCommand) {
+    public RecipeController(RecipeService recipeService) {
         this.recipeService = recipeService;
-        this.recipeToRecipeCommand = recipeToRecipeCommand;
     }
 
-    @RequestMapping("/recipe/show/{id}")
+    @GetMapping
+    @RequestMapping("/recipe/{id}/show")
     public String show(Model model, @PathVariable Long id) {
-        model.addAttribute("recipe",getById(id));
+        model.addAttribute("recipe",recipeService.findById(id));
 
         return "/recipe/show";
     }
 
-    @RequestMapping("/recipe/edit/{id}")
+    @GetMapping
+    @RequestMapping("/recipe/{id}/edit")
     public String edit(Model model, @PathVariable Long id) {
-        RecipeCommand command = getById(id);
+        RecipeCommand command = recipeService.findById(id);
         model.addAttribute("recipe",command);
         model.addAttribute("cancelUrl",getCancelUrl(command));
 
         return "/recipe/form";
     }
 
-    @RequestMapping("/recipe/delete/{id}")
+    @GetMapping
+    @RequestMapping("/recipe/{id}/delete")
     public String delete(@PathVariable Long id) {
         recipeService.deleteById(id);
         return "redirect:/";
     }
 
+    @GetMapping
     @RequestMapping("/recipe/new")
     public String create(Model model) {
         RecipeCommand command = new RecipeCommand();
@@ -59,9 +57,9 @@ public class RecipeController {
     @PostMapping
     @RequestMapping("/recipe/save")
     public String saveOrUpdate(@ModelAttribute RecipeCommand command) {
-        RecipeCommand savedRecipeCommand = recipeService.saveRecipeCommand(command);
+        RecipeCommand savedRecipeCommand = recipeService.saveRecipe(command);
 
-        return "redirect:/recipe/show/" + savedRecipeCommand.getId();
+        return "redirect:/recipe/" + savedRecipeCommand.getId() + "/show";
     }
 
 
@@ -69,14 +67,6 @@ public class RecipeController {
             if(command.getId() == null) {
                 return "/";
             }
-            return "/recipe/show/" + command.getId();
-    }
-
-
-
-    private RecipeCommand getById(Long id) {
-        Recipe recipe = recipeService.findById(id);
-        RecipeCommand command = recipeToRecipeCommand.convert(recipe);
-        return command;
+            return "/recipe/" + command.getId() + "/show";
     }
 }

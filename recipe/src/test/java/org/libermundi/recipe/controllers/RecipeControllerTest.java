@@ -31,27 +31,18 @@ public class RecipeControllerTest {
     @Mock
     RecipeService recipeService;
 
-    UnitOfMeasureToUnitOfMeasureCommand unitOfMeasureToUnitOfMeasureCommand = new UnitOfMeasureToUnitOfMeasureCommand();
-
-    CategoryToCategoryCommand categoryToCategoryCommand = new CategoryToCategoryCommand();
-
-    NotesToNotesCommand notesToNotesCommand = new NotesToNotesCommand();
-
-    IngredientToIngredientCommand ingredientToIngredientCommand = new IngredientToIngredientCommand(unitOfMeasureToUnitOfMeasureCommand);
-
-    RecipeToRecipeCommand recipeToRecipeCommand = new RecipeToRecipeCommand(categoryToCategoryCommand,ingredientToIngredientCommand,notesToNotesCommand);
-
     @Mock
     Model model;
 
-    Recipe recipe;
+    RecipeCommand recipe;
 
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-        recipeController = new RecipeController(recipeService,recipeToRecipeCommand);
+        recipeController = new RecipeController(recipeService);
 
-        recipe = new Recipe("Test Recipe");
+        recipe = new RecipeCommand();
+        recipe.setName("Test Recipe");
         recipe.setId(1L);
 
         when(recipeService.findById(anyLong())).thenReturn(recipe);
@@ -62,7 +53,7 @@ public class RecipeControllerTest {
     public void testGetShowView() throws Exception {
         MockMvc mockMvc = MockMvcBuilders.standaloneSetup(recipeController).build();
 
-        mockMvc.perform(get("/recipe/show/1"))
+        mockMvc.perform(get("/recipe/1/show"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("/recipe/show"))
                 .andExpect(model().attributeExists("recipe"));
@@ -83,7 +74,7 @@ public class RecipeControllerTest {
     public void testGetUpdateView() throws Exception {
         MockMvc mockMvc = MockMvcBuilders.standaloneSetup(recipeController).build();
 
-        mockMvc.perform(get("/recipe/edit/1"))
+        mockMvc.perform(get("/recipe/1/edit"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("/recipe/form"))
                 .andExpect(model().attributeExists("recipe"))
@@ -95,7 +86,7 @@ public class RecipeControllerTest {
     public void testGetDeleteView() throws Exception {
         MockMvc mockMvc = MockMvcBuilders.standaloneSetup(recipeController).build();
 
-        mockMvc.perform(get("/recipe/delete/1"))
+        mockMvc.perform(get("/recipe/1/delete"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/"));
     }
@@ -132,7 +123,7 @@ public class RecipeControllerTest {
         verify(model, times(1)).addAttribute(eq("cancelUrl"), argumentCaptor2.capture());
 
         assertEquals("Test Recipe", recipe.getName());
-        assertEquals("/recipe/show/1",argumentCaptor2.getValue());
+        assertEquals("/recipe/1/show",argumentCaptor2.getValue());
 
     }
 

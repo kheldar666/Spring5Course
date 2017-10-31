@@ -3,6 +3,7 @@ package org.libermundi.recipe.services;
 import com.google.common.collect.Iterables;
 import org.junit.Before;
 import org.junit.Test;
+import org.libermundi.recipe.commands.RecipeCommand;
 import org.libermundi.recipe.converters.RecipeCommandToRecipe;
 import org.libermundi.recipe.converters.RecipeToRecipeCommand;
 import org.libermundi.recipe.domain.Recipe;
@@ -16,6 +17,7 @@ import java.util.Optional;
 import java.util.Set;
 
 import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -61,15 +63,18 @@ public class RecipeServiceImplTest {
         Recipe recipe = new Recipe();
         recipe.setId(1L);
 
+        RecipeCommand command = new RecipeCommand();
+        command.setId(1L);
+
         Optional<Recipe> recipeOptional = Optional.of(recipe);
 
         when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
+        when(recipeToRecipeCommand.convert(any(Recipe.class))).thenReturn(command);
 
-        Recipe retrievedRecipe = recipeService.findById(1L);
-        assertEquals(recipe, retrievedRecipe);
+        RecipeCommand retrievedRecipe = recipeService.findById(1L);
+        assertEquals(recipe.getId(), retrievedRecipe.getId());
 
         verify(recipeRepository,times(1)).findById(anyLong());
-
     }
 
 }

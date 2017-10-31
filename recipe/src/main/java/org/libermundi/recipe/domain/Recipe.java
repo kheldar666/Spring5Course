@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Data
@@ -31,10 +32,11 @@ public class Recipe extends Identity{
     private Notes notes;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
-    private Set<Ingredient> ingredients = new HashSet<>();
+    @OrderBy
+    private Set<Ingredient> ingredients = new LinkedHashSet<>();
 
     @ManyToMany
-    private Set<Category> categories = new HashSet<>();
+    private Set<Category> categories = new LinkedHashSet<>();
 
     public Recipe() {
     }

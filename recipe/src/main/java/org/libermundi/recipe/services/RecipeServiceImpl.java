@@ -40,19 +40,19 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
-    public Recipe findById(Long id) {
+    public RecipeCommand findById(Long id) {
         Optional<Recipe> recipeOptional = recipeRepository.findById(id);
 
         if(! recipeOptional.isPresent()){
             throw new RuntimeException("Recipe not Found !");
         }
 
-        return recipeOptional.get();
+        return recipeToRecipeCommand.convert(recipeOptional.get());
     }
 
     @Override
     @Transactional
-    public RecipeCommand saveRecipeCommand(RecipeCommand recipeCommand) {
+    public RecipeCommand saveRecipe(RecipeCommand recipeCommand) {
         Recipe detachedRecipe = recipeCommandToRecipe.convert(recipeCommand);
         Recipe mergedRecipe;
 

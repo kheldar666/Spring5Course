@@ -58,7 +58,7 @@ public class ApplicationLoader implements ApplicationListener<ContextRefreshedEv
             measures.add(new UnitOfMeasure("Cup(s)","cup"));
             measures.add(new UnitOfMeasure("Dash","dash"));
             measures.add(new UnitOfMeasure("Pint","pint"));
-            measures.add(new UnitOfMeasure("","none"));
+            measures.add(new UnitOfMeasure("---","none"));
 
         unitOfMeasureRepository.saveAll(measures);
 
