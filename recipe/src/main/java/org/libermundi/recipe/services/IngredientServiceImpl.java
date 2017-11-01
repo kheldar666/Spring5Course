@@ -32,4 +32,15 @@ public class IngredientServiceImpl implements IngredientService {
         return ingredientCommand.get();
 
     }
+
+    @Override
+    public IngredientCommand saveIngredient(Long recipeId, IngredientCommand ingredient) {
+        RecipeCommand recipe = recipeService.findById(recipeId);
+
+        recipe.getIngredients().add(ingredient);
+
+        recipeService.saveRecipe(recipe);
+
+        return ingredient;
+    }
 }

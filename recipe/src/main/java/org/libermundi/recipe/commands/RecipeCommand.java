@@ -9,8 +9,8 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString(exclude = {"categories","ingredients","notes","image","directions"})
-@EqualsAndHashCode(exclude = {"categories","ingredients","notes"})
+@ToString(of = {"id, name, created, updated"})
+@EqualsAndHashCode(callSuper = true)
 public class RecipeCommand extends IdentityCommand  {
     private String name;
     private Integer prepTime;

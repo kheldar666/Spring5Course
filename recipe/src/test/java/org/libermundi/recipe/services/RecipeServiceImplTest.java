@@ -10,21 +10,17 @@ import org.libermundi.recipe.domain.Recipe;
 import org.libermundi.recipe.repositories.RecipeRepository;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.HashSet;
 import java.util.Optional;
-import java.util.Set;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class RecipeServiceImplTest {
-    RecipeServiceImpl recipeService;
+    RecipeService recipeService;
 
     @Mock
     RecipeRepository recipeRepository;
@@ -60,6 +56,7 @@ public class RecipeServiceImplTest {
 
     @Test
     public void findById() {
+        // Given
         Recipe recipe = new Recipe();
         recipe.setId(1L);
 
@@ -71,7 +68,10 @@ public class RecipeServiceImplTest {
         when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
         when(recipeToRecipeCommand.convert(any(Recipe.class))).thenReturn(command);
 
+        // When
         RecipeCommand retrievedRecipe = recipeService.findById(1L);
+
+        // Then
         assertEquals(recipe.getId(), retrievedRecipe.getId());
 
         verify(recipeRepository,times(1)).findById(anyLong());

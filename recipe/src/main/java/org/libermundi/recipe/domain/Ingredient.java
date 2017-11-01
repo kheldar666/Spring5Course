@@ -7,9 +7,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import java.math.BigDecimal;
 
-@Data
-@ToString(exclude = {"recipe","unit"},callSuper = true)
-@EqualsAndHashCode(exclude = {"recipe","unit"},callSuper = true)
+@Getter
+@Setter
+@ToString(of ={"description"},callSuper = true)
 @Entity
 public class Ingredient extends Identity {
     private String description;

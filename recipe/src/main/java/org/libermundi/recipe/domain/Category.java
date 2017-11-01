@@ -6,9 +6,9 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import java.util.Set;
 
-@Data
-@ToString(exclude = {"recipes"},callSuper = true)
-@EqualsAndHashCode(exclude = {"recipes"},callSuper = true)
+@Getter
+@Setter
+@ToString(of={"name"},callSuper = true)
 @Entity
 public class Category extends Identity {
     private String name;
@@ -22,6 +22,5 @@ public class Category extends Identity {
     public Category(String name) {
         this.name = name;
     }
-
 
 }

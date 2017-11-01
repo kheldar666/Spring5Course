@@ -183,7 +183,7 @@ public class ApplicationLoader implements ApplicationListener<ContextRefreshedEv
         chicken.addIngredient(new Ingredient("sour cream thinned with 1/4 cup milk", new BigDecimal("0.5"), unitOfMeasureRepository.findByUnit("cup").get()));
         chicken.addIngredient(new Ingredient("lime, cut into wedges", new BigDecimal("1"), unitOfMeasureRepository.findByUnit("none").get()));
 
-
         recipeRepository.save(chicken);
+
     }
 }

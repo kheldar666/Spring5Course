@@ -5,12 +5,9 @@ import org.libermundi.recipe.commands.RecipeCommand;
 import org.libermundi.recipe.services.IngredientService;
 import org.libermundi.recipe.services.RecipeService;
 import org.libermundi.recipe.services.UnitOfMeasureService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class IngredientController {
@@ -48,5 +45,14 @@ public class IngredientController {
         model.addAttribute("uomList",unitOfMeasureService.findAll());
 
         return "/recipe/ingredients/edit";
+    }
+
+    @PostMapping
+    @RequestMapping("/recipe/{recipeId}/ingredients/{ingredientId}/save")
+    public String save(@ModelAttribute IngredientCommand ingredient, @PathVariable Long recipeId, @PathVariable Long ingredientId) {
+
+        ingredientService.saveIngredient(recipeId,ingredient);
+
+        return "redirect:/recipe/" + recipeId + "/ingredients/list";
     }
 }
