@@ -1,16 +1,13 @@
 package org.libermundi.recipe.commands;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.math.BigDecimal;
 
 @Getter
 @Setter
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
+@ToString(of = {"id, name, created, updated"})
 public class IngredientCommand extends IdentityCommand  {
     private String description;
     private BigDecimal amount;

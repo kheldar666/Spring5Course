@@ -1,15 +1,12 @@
 package org.libermundi.recipe.commands;
 
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
+@ToString(of = {"id, name, created, updated"})
 public class CategoryCommand extends IdentityCommand {
     private String name;
 }

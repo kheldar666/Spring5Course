@@ -11,7 +11,7 @@
 <!--/*@thymesVar id="recipe" type="org.libermundi.recipe.commands.RecipeCommand"*/-->
 <!--/*@thymesVar id="uomList" type="java.lang.Iterable<org.libermundi.recipe.commands.UnitOfMeasureCommand>"*/-->
 <body>
-<form th:object="${ingredient}" th:action="@{/recipe/{recipeId}/ingredients/{ingredientId}/save(recipeId=${recipe.id},ingredientId=${ingredient.id})}" method="post">
+<form th:object="${ingredient}" th:action="@{/recipe/{recipeId}/ingredients/save(recipeId=${recipe.id})}" method="post">
 <div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col col-md-6">

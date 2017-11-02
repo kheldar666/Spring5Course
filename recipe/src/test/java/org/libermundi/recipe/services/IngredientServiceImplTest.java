@@ -8,6 +8,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 
@@ -44,4 +45,29 @@ public class IngredientServiceImplTest {
         assertEquals(ingredient.getId(), found.getId());
     }
 
+
+    @Test
+    public void saveIngredient() throws Exception {
+    }
+
+    @Test
+    public void deleteIngredient() throws Exception {
+        // Given
+        IngredientCommand ingredient = new IngredientCommand();
+        ingredient.setId(7L);
+
+        RecipeCommand recipe = new RecipeCommand();
+        recipe.setId(1L);
+        recipe.getIngredients().add(ingredient);
+
+        when(recipeService.findById(1L)).thenReturn(recipe);
+
+        // When
+        ingredientService.deleteIngredient(1L,7L);
+
+        // Then
+        assertTrue(recipe.getIngredients().size() == 0);
+
+
+    }
 }

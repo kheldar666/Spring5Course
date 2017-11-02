@@ -44,12 +44,33 @@ public class IngredientController {
         model.addAttribute("recipe",recipeCommand);
         model.addAttribute("uomList",unitOfMeasureService.findAll());
 
-        return "/recipe/ingredients/edit";
+        return "/recipe/ingredients/form";
+    }
+
+    @GetMapping
+    @RequestMapping("/recipe/{recipeId}/ingredients/add")
+    public String add(Model model, @PathVariable Long recipeId) {
+        RecipeCommand recipeCommand = recipeService.findById(recipeId);
+        IngredientCommand ingredientCommand = new IngredientCommand();
+
+        model.addAttribute("ingredient",ingredientCommand);
+        model.addAttribute("recipe",recipeCommand);
+        model.addAttribute("uomList",unitOfMeasureService.findAll());
+
+        return "/recipe/ingredients/form";
+    }
+
+    @GetMapping
+    @RequestMapping("/recipe/{recipeId}/ingredients/{id}/delete")
+    public String delete(Model model, @PathVariable Long recipeId, @PathVariable Long id) {
+        ingredientService.deleteIngredient(recipeId,id);
+
+        return "redirect:/recipe/" + recipeId + "/ingredients/list";
     }
 
     @PostMapping
-    @RequestMapping("/recipe/{recipeId}/ingredients/{ingredientId}/save")
-    public String save(@ModelAttribute IngredientCommand ingredient, @PathVariable Long recipeId, @PathVariable Long ingredientId) {
+    @RequestMapping("/recipe/{recipeId}/ingredients/save")
+    public String save(@ModelAttribute IngredientCommand ingredient, @PathVariable Long recipeId) {
 
         ingredientService.saveIngredient(recipeId,ingredient);
 

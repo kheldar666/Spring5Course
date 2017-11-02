@@ -43,4 +43,17 @@ public class IngredientServiceImpl implements IngredientService {
 
         return ingredient;
     }
+
+
+    @Override
+    public void deleteIngredient(Long recipeId, Long id) {
+        RecipeCommand recipe = recipeService.findById(recipeId);
+        IngredientCommand remove = new IngredientCommand();
+        remove.setId(id);
+
+        IngredientCommand original = findIngredient(recipeId,id);
+
+        recipe.getIngredients().remove(remove);
+        recipeService.saveRecipe(recipe);
+    }
 }

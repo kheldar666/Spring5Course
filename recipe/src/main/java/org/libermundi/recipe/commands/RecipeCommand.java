@@ -10,7 +10,6 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @ToString(of = {"id, name, created, updated"})
-@EqualsAndHashCode(callSuper = true)
 public class RecipeCommand extends IdentityCommand  {
     private String name;
     private Integer prepTime;

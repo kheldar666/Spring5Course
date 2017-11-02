@@ -40,8 +40,6 @@ public abstract class Identity {
 
     @Override
     public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + (id != null ? id.hashCode() : uuid.hashCode());
-        return result;
+        return (id != null ? id.hashCode() : uuid.hashCode());
     }
 }

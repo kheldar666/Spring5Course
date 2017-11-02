@@ -19,7 +19,7 @@
                             <h4 th:text="${'Ingredients of: ' + recipe.name}">Ingredients of : Cool Recipe</h4>
                         </div>
                         <div class="col-4 text-right">
-                            <a name="create" id="create" class="btn btn-primary" th:href="@{'/recipe/ingredients/new'}" role="button">Add</a>
+                            <a name="create" id="create" class="btn btn-primary" th:href="@{'/recipe/'+${recipe.id}+'/ingredients/add'}" role="button">Add</a>
                         </div>
                     </div>
                 </div>

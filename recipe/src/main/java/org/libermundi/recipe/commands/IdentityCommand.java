@@ -1,9 +1,6 @@
 package org.libermundi.recipe.commands;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.Transient;
 import java.util.Date;
@@ -26,7 +23,6 @@ public abstract class IdentityCommand {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
 
         IdentityCommand identity = (IdentityCommand) o;
 
@@ -35,8 +31,6 @@ public abstract class IdentityCommand {
 
     @Override
     public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + (id != null ? id.hashCode() : uuid.hashCode());
-        return result;
+        return (id != null ? id.hashCode() : uuid.hashCode());
     }
 }

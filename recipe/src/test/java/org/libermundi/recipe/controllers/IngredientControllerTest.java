@@ -16,6 +16,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
@@ -59,9 +60,20 @@ public class IngredientControllerTest {
 
         mockMvc.perform(get("/recipe/1/ingredients/1/edit"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("/recipe/ingredients/edit"))
+                .andExpect(view().name("/recipe/ingredients/form"))
                 .andExpect(model().attributeExists("ingredient"));
 
     }
+
+    @Test
+    public void save() throws Exception {
+        MockMvc mockMvc = MockMvcBuilders.standaloneSetup(ingredientController).build();
+        IngredientCommand ingredientCommand = new IngredientCommand();
+        mockMvc.perform(post("/recipe/1/ingredients/save", ingredientCommand))
+                .andExpect(status().isOk())
+                .andExpect(view().name("redirect:/recipe/1/ingredients/list"));
+
+    }
+
 
 }
