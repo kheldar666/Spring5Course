@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString(of = {"id, name, created, updated"})
+@ToString(of = {"id, description"})
 public class IngredientCommand extends IdentityCommand  {
     private String description;
     private BigDecimal amount;

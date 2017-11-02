@@ -54,16 +54,8 @@ public class RecipeServiceImpl implements RecipeService {
     @Transactional
     public RecipeCommand saveRecipe(RecipeCommand recipeCommand) {
         Recipe detachedRecipe = recipeCommandToRecipe.convert(recipeCommand);
-        Recipe mergedRecipe;
 
-        if(detachedRecipe.getId() != null) {
-            mergedRecipe = recipeRepository.findById(detachedRecipe.getId()).get();
-            NullAwareBeanUtil.copyProperties(detachedRecipe,mergedRecipe);
-        } else {
-            mergedRecipe=detachedRecipe;
-        }
-
-        Recipe savedRecipe = recipeRepository.save(mergedRecipe);
+        Recipe savedRecipe = recipeRepository.save(detachedRecipe);
 
         if(log.isDebugEnabled()){
             log.debug("Save recipe : " + savedRecipe);

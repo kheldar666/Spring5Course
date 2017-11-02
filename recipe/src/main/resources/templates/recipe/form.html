@@ -31,24 +31,39 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-3 form-group">
+                    <div class="col-4 form-group">
                         <label th:for="prepTime">Prep Time (mins)</label>
                         <input type="text" class="form-control" th:field="*{prepTime}" aria-describedby="helpPrep" placeholder="Prep time in mins">
                         <small id="helpPrep" class="form-text text-muted">How long to prepare this recipe?</small>
                     </div>
-                    <div class="col-6 form-group">
+                    <div class="col-4 form-group">
+                        <label th:for="servings">Servings</label>
+                        <input type="text" class="form-control" th:field="*{servings}" aria-describedby="helpServ" placeholder="Number of Servings">
+                        <small id="helpServ" class="form-text text-muted">How many people can share this dish?</small>
+                    </div>
+                    <div class="col-4 form-group">
                         <label th:for="source">Source</label>
                         <input type="text" class="form-control" th:field="*{source}" aria-describedby="helpSrc" placeholder="Source of the recipe">
                         <small id="helpSrc" class="form-text text-muted">Where did you find out about this recipe?</small>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-3 form-group">
+                    <div class="col-4 form-group">
                         <label th:for="cookTime">Cook Time (mins)</label>
                         <input type="text" class="form-control" th:field="*{cookTime}" aria-describedby="helpCook" placeholder="Cook time in mins">
                         <small id="helpCook" class="form-text text-muted">How long to cook this recipe?</small>
                     </div>
-                    <div class="col-6 form-group">
+                    <div class="col-4 form-group">
+                        <label th:for="difficulty">Difficulty</label>
+                        <select class="form-control" th:field="*{difficulty}">
+                            <option th:each="difficultyValue : ${T(org.libermundi.recipe.domain.Difficulty).values()}"
+                                    th:value="${difficultyValue.name()}"
+                                    th:text="${difficultyValue.name()}">Easyish</option>
+                            <option value="" th:remove="all">Hardish</option>
+                            <option value="" th:remove="all">Easyish</option>
+                        </select>
+                    </div>
+                    <div class="col-4 form-group">
                         <label th:for="url">URL</label>
                         <input type="text" class="form-control" th:field="*{url}" aria-describedby="helpPrep" placeholder="http://www.example.com/path/to/recipe">
                         <small id="helpPrep" class="form-text text-muted">A link to the original recipe</small>

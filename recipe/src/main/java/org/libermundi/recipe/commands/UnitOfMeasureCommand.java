@@ -5,7 +5,7 @@ import lombok.*;
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString(of = {"id, name, created, updated"})
+@ToString(of = {"id, name"})
 public class UnitOfMeasureCommand extends IdentityCommand  {
     private String name;
     private String unit;

@@ -12,7 +12,7 @@ import java.util.UUID;
 
 @Getter
 @Setter
-@ToString(exclude = "uuid")
+@ToString(of = "id")
 @MappedSuperclass
 @EntityListeners(IdentityListener.class)
 public abstract class Identity {

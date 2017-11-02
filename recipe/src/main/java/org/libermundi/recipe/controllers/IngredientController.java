@@ -25,8 +25,7 @@ public class IngredientController {
         this.unitOfMeasureService = unitOfMeasureService;
     }
 
-    @GetMapping
-    @RequestMapping("/recipe/{recipeId}/ingredients/list")
+    @GetMapping("/recipe/{recipeId}/ingredients/list")
     public String list(Model model, @PathVariable Long recipeId) {
         RecipeCommand recipe = recipeService.findById(recipeId);
 
@@ -35,8 +34,7 @@ public class IngredientController {
         return "/recipe/ingredients/list";
     }
 
-    @GetMapping
-    @RequestMapping("/recipe/{recipeId}/ingredients/{id}/edit")
+    @GetMapping("/recipe/{recipeId}/ingredients/{id}/edit")
     public String edit(Model model, @PathVariable Long recipeId, @PathVariable Long id) {
         IngredientCommand ingredientCommand = ingredientService.findIngredient(recipeId,id);
         RecipeCommand recipeCommand = recipeService.findById(recipeId);
@@ -48,8 +46,7 @@ public class IngredientController {
         return "/recipe/ingredients/form";
     }
 
-    @GetMapping
-    @RequestMapping("/recipe/{recipeId}/ingredients/add")
+    @GetMapping("/recipe/{recipeId}/ingredients/add")
     public String add(Model model, @PathVariable Long recipeId) {
         RecipeCommand recipeCommand = recipeService.findById(recipeId);
         IngredientCommand ingredientCommand = new IngredientCommand();
@@ -62,16 +59,14 @@ public class IngredientController {
         return "/recipe/ingredients/form";
     }
 
-    @GetMapping
-    @RequestMapping("/recipe/{recipeId}/ingredients/{id}/delete")
+    @GetMapping("/recipe/{recipeId}/ingredients/{id}/delete")
     public String delete(@PathVariable Long recipeId, @PathVariable Long id) {
         ingredientService.deleteIngredient(recipeId,id);
 
         return "redirect:/recipe/" + recipeId + "/ingredients/list";
     }
 
-    @PostMapping
-    @RequestMapping("/recipe/{recipeId}/ingredients/save")
+    @PostMapping("/recipe/{recipeId}/ingredients/save")
     public String save(@ModelAttribute IngredientCommand ingredient, @PathVariable Long recipeId) {
 
         ingredientService.saveIngredient(recipeId,ingredient);

@@ -52,8 +52,7 @@ public class IngredientServiceImpl implements IngredientService {
 
 
     @Override
-    @Transactional
-    public void deleteIngredient(Long recipeId, Long id) {
-        ingredientRepository.deleteByIdAndRecipeId(id,recipeId);
+    public void deleteIngredient(Long recipeId, Long ingredientId) {
+        ingredientRepository.deleteByIdAndRecipeId(ingredientId,recipeId);
     }
 }

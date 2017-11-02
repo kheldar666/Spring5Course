@@ -9,7 +9,7 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString(of = {"id, name, created, updated"})
+@ToString(of = {"id, name"})
 public class RecipeCommand extends IdentityCommand  {
     private String name;
     private Integer prepTime;
