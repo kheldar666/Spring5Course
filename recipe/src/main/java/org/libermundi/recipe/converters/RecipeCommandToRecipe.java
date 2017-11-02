@@ -51,7 +51,7 @@ public class RecipeCommandToRecipe implements Converter<RecipeCommand, Recipe> {
 
         for (Iterator<IngredientCommand> iterator = recipeCommand.getIngredients().iterator(); iterator.hasNext(); ) {
             IngredientCommand ingredientCommand = iterator.next();
-            recipe.getIngredients().add(ingredientConverter.convert(ingredientCommand));
+            recipe.addIngredient(ingredientConverter.convert(ingredientCommand));
         }
 
 
