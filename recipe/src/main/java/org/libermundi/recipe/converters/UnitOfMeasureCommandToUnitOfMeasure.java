@@ -3,12 +3,19 @@ package org.libermundi.recipe.converters;
 import lombok.Synchronized;
 import org.libermundi.recipe.commands.UnitOfMeasureCommand;
 import org.libermundi.recipe.domain.UnitOfMeasure;
+import org.libermundi.recipe.repositories.UnitOfMeasureRepository;
+import org.libermundi.recipe.utils.NullAwareBeanUtil;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UnitOfMeasureCommandToUnitOfMeasure extends IdentityCommandToIdentity implements Converter<UnitOfMeasureCommand, UnitOfMeasure> {
+public class UnitOfMeasureCommandToUnitOfMeasure implements Converter<UnitOfMeasureCommand, UnitOfMeasure> {
+    private UnitOfMeasureRepository unitOfMeasureRepository;
+
+    public UnitOfMeasureCommandToUnitOfMeasure(UnitOfMeasureRepository unitOfMeasureRepository) {
+        this.unitOfMeasureRepository = unitOfMeasureRepository;
+    }
 
     @Nullable
     @Override
@@ -17,13 +24,15 @@ public class UnitOfMeasureCommandToUnitOfMeasure extends IdentityCommandToIdenti
         if(unitOfMeasureCommand == null){
             return null;
         }
+        UnitOfMeasure unitOfMeasure;
 
-        UnitOfMeasure unitOfMeasure = new UnitOfMeasure();
+        if(unitOfMeasureCommand.getId() != null) {
+            unitOfMeasure = unitOfMeasureRepository.findById(unitOfMeasureCommand.getId()).get();
+        } else {
+            unitOfMeasure = new UnitOfMeasure();
+        }
 
-        convertIdentityCommand(unitOfMeasureCommand,unitOfMeasure);
-
-        unitOfMeasure.setName(unitOfMeasureCommand.getName());
-        unitOfMeasure.setUnit(unitOfMeasureCommand.getUnit());
+        NullAwareBeanUtil.copyProperties(unitOfMeasureCommand,unitOfMeasure);
 
         return unitOfMeasure;
     }

@@ -4,9 +4,16 @@ import org.junit.Before;
 import org.junit.Test;
 import org.libermundi.recipe.commands.NotesCommand;
 import org.libermundi.recipe.domain.Notes;
+import org.libermundi.recipe.repositories.NotesRepository;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.core.convert.converter.Converter;
 
+import java.util.Optional;
+
 import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.when;
 
 public class NotesCommandToNotesTest {
 
@@ -15,9 +22,19 @@ public class NotesCommandToNotesTest {
 
     Converter<NotesCommand, Notes> converter;
 
+    @Mock
+    NotesRepository notesRepository;
+
+
     @Before
     public void setUp() throws Exception {
-        converter = new NotesCommandToNotes();
+        MockitoAnnotations.initMocks(this);
+
+        Notes notes = new Notes();
+        notes.setId(ID);
+        when(notesRepository.findById(anyLong())).thenReturn(Optional.of(notes));
+
+        converter = new NotesCommandToNotes(notesRepository);
     }
 
     @Test

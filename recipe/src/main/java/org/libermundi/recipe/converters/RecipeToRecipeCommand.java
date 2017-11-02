@@ -4,6 +4,7 @@ import lombok.Synchronized;
 import org.libermundi.recipe.commands.RecipeCommand;
 import org.libermundi.recipe.domain.Category;
 import org.libermundi.recipe.domain.Recipe;
+import org.libermundi.recipe.utils.NullAwareBeanUtil;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
@@ -12,7 +13,7 @@ import org.springframework.stereotype.Component;
  * Created by jt on 6/21/17.
  */
 @Component
-public class RecipeToRecipeCommand extends IdentityToIdentityCommand implements Converter<Recipe, RecipeCommand> {
+public class RecipeToRecipeCommand implements Converter<Recipe, RecipeCommand> {
 
     private final CategoryToCategoryCommand categoryConveter;
     private final IngredientToIngredientCommand ingredientConverter;
@@ -35,16 +36,8 @@ public class RecipeToRecipeCommand extends IdentityToIdentityCommand implements 
 
         final RecipeCommand recipeCommand = new RecipeCommand();
 
-        convertIdentity(recipe,recipeCommand);
+        NullAwareBeanUtil.copyProperties(recipe,recipeCommand,"notes");
 
-        recipeCommand.setCookTime(recipe.getCookTime());
-        recipeCommand.setPrepTime(recipe.getPrepTime());
-        recipeCommand.setName(recipe.getName());
-        recipeCommand.setDifficulty(recipe.getDifficulty());
-        recipeCommand.setDirections(recipe.getDirections());
-        recipeCommand.setServings(recipe.getServings());
-        recipeCommand.setSource(recipe.getSource());
-        recipeCommand.setUrl(recipe.getUrl());
         recipeCommand.setNotes(notesConverter.convert(recipe.getNotes()));
 
         if (recipe.getCategories() != null && recipe.getCategories().size() > 0){

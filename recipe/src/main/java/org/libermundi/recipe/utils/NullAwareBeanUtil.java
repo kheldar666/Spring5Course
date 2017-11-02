@@ -1,5 +1,6 @@
 package org.libermundi.recipe.utils;
 
+import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
@@ -25,7 +26,7 @@ public class NullAwareBeanUtil {
     }
 
     // then use Spring BeanUtils to copy and ignore null
-    public static void copyProperties(Object src, Object target) {
-        BeanUtils.copyProperties(src, target, getNullPropertyNames(src));
+    public static void copyProperties(Object src, Object target, String... exclude) {
+        BeanUtils.copyProperties(src, target, ArrayUtils.addAll(getNullPropertyNames(src),exclude));
     }
 }

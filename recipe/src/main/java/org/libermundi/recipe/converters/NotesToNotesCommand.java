@@ -5,6 +5,7 @@ package org.libermundi.recipe.converters;
 import lombok.Synchronized;
 import org.libermundi.recipe.commands.NotesCommand;
 import org.libermundi.recipe.domain.Notes;
+import org.libermundi.recipe.utils.NullAwareBeanUtil;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
@@ -13,7 +14,7 @@ import org.springframework.stereotype.Component;
  * Created by jt on 6/21/17.
  */
 @Component
-public class NotesToNotesCommand extends IdentityToIdentityCommand implements Converter<Notes, NotesCommand> {
+public class NotesToNotesCommand implements Converter<Notes, NotesCommand> {
 
     @Synchronized
     @Nullable
@@ -25,9 +26,8 @@ public class NotesToNotesCommand extends IdentityToIdentityCommand implements Co
 
         final NotesCommand notesCommand = new NotesCommand();
 
-        convertIdentity(notes, notesCommand);
+        NullAwareBeanUtil.copyProperties(notes,notesCommand);
 
-        notesCommand.setNotes(notes.getNotes());
         return notesCommand;
     }
 }

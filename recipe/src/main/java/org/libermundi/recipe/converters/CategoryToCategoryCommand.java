@@ -3,12 +3,13 @@ package org.libermundi.recipe.converters;
 import lombok.Synchronized;
 import org.libermundi.recipe.commands.CategoryCommand;
 import org.libermundi.recipe.domain.Category;
+import org.libermundi.recipe.utils.NullAwareBeanUtil;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CategoryToCategoryCommand extends IdentityToIdentityCommand implements Converter<Category,CategoryCommand> {
+public class CategoryToCategoryCommand implements Converter<Category,CategoryCommand> {
     @Nullable
     @Override
     @Synchronized
@@ -18,9 +19,7 @@ public class CategoryToCategoryCommand extends IdentityToIdentityCommand impleme
         }
         final CategoryCommand categoryCommand = new CategoryCommand();
 
-            convertIdentity(category,categoryCommand);
-
-            categoryCommand.setName(category.getName());
+        NullAwareBeanUtil.copyProperties(category,categoryCommand);
 
         return categoryCommand;
     }

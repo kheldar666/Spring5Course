@@ -5,6 +5,8 @@ import org.libermundi.recipe.commands.CategoryCommand;
 import org.libermundi.recipe.commands.IngredientCommand;
 import org.libermundi.recipe.commands.RecipeCommand;
 import org.libermundi.recipe.domain.Recipe;
+import org.libermundi.recipe.repositories.RecipeRepository;
+import org.libermundi.recipe.utils.NullAwareBeanUtil;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
@@ -12,7 +14,7 @@ import org.springframework.stereotype.Component;
 import java.util.Iterator;
 
 @Component
-public class RecipeCommandToRecipe extends IdentityCommandToIdentity implements Converter<RecipeCommand, Recipe> {
+public class RecipeCommandToRecipe implements Converter<RecipeCommand, Recipe> {
 
     IngredientCommandToIngredient ingredientConverter;
 
@@ -20,11 +22,13 @@ public class RecipeCommandToRecipe extends IdentityCommandToIdentity implements 
 
     NotesCommandToNotes notesConverter;
 
-    public RecipeCommandToRecipe(IngredientCommandToIngredient ingredientConverter
-            , CategoryCommandToCategory categoryConverter, NotesCommandToNotes notesConverter) {
+    RecipeRepository recipeRepository;
+
+    public RecipeCommandToRecipe(IngredientCommandToIngredient ingredientConverter, CategoryCommandToCategory categoryConverter, NotesCommandToNotes notesConverter, RecipeRepository recipeRepository) {
         this.ingredientConverter = ingredientConverter;
         this.categoryConverter = categoryConverter;
         this.notesConverter = notesConverter;
+        this.recipeRepository = recipeRepository;
     }
 
     @Nullable
@@ -35,24 +39,21 @@ public class RecipeCommandToRecipe extends IdentityCommandToIdentity implements 
             return null;
         }
 
-        Recipe recipe = new Recipe();
+        Recipe recipe;
 
-        convertIdentityCommand(recipeCommand,recipe);
+        if(recipeCommand.getId() != null) {
+            recipe = recipeRepository.findById(recipeCommand.getId()).get();
+        } else {
+            recipe = new Recipe();
+        }
 
-        recipe.setName(recipeCommand.getName());
-        recipe.setPrepTime(recipeCommand.getPrepTime());
-        recipe.setCookTime(recipeCommand.getCookTime());
-        recipe.setServings(recipeCommand.getServings());
-        recipe.setSource(recipeCommand.getSource());
-        recipe.setUrl(recipeCommand.getUrl());
-        recipe.setDirections(recipeCommand.getDirections());
+        NullAwareBeanUtil.copyProperties(recipeCommand,recipe, "notes");
 
         for (Iterator<IngredientCommand> iterator = recipeCommand.getIngredients().iterator(); iterator.hasNext(); ) {
             IngredientCommand ingredientCommand = iterator.next();
             recipe.getIngredients().add(ingredientConverter.convert(ingredientCommand));
         }
 
-        recipe.setDifficulty(recipeCommand.getDifficulty());
 
         for (Iterator<CategoryCommand> iterator = recipeCommand.getCategories().iterator(); iterator.hasNext(); ) {
             CategoryCommand categoryCommand = iterator.next();

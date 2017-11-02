@@ -7,8 +7,15 @@ import org.libermundi.recipe.commands.IngredientCommand;
 import org.libermundi.recipe.commands.NotesCommand;
 import org.libermundi.recipe.commands.RecipeCommand;
 import org.libermundi.recipe.domain.*;
+import org.libermundi.recipe.repositories.*;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+
+import java.util.Optional;
 
 import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.when;
 
 public class RecipeCommandToRecipeTest {
     public static final Long RECIPE_ID = 1L;
@@ -30,17 +37,60 @@ public class RecipeCommandToRecipeTest {
 
     RecipeCommand recipeCommand;
 
-    UnitOfMeasureCommandToUnitOfMeasure measureConverter = new UnitOfMeasureCommandToUnitOfMeasure();
+    @Mock
+    UnitOfMeasureRepository unitOfMeasureRepository;
 
-    IngredientCommandToIngredient ingredientConverter = new IngredientCommandToIngredient(measureConverter);
+    @Mock
+    IngredientRepository ingredientRepository;
 
-    CategoryCommandToCategory categoryConverter = new CategoryCommandToCategory();
+    @Mock
+    CategoryRepository categoryRepository;
 
-    NotesCommandToNotes notesConverter = new NotesCommandToNotes();
+    @Mock
+    NotesRepository notesRepository;
+
+    @Mock
+    RecipeRepository recipeRepository;
+
+    UnitOfMeasureCommandToUnitOfMeasure measureConverter;
+
+    IngredientCommandToIngredient ingredientConverter;
+
+    CategoryCommandToCategory categoryConverter;
+
+    NotesCommandToNotes notesConverter;
 
     @Before
     public void setUp() throws Exception {
-        converter = new RecipeCommandToRecipe(ingredientConverter,categoryConverter,notesConverter);
+        MockitoAnnotations.initMocks(this);
+
+        measureConverter = new UnitOfMeasureCommandToUnitOfMeasure(unitOfMeasureRepository);
+        ingredientConverter = new IngredientCommandToIngredient(measureConverter,ingredientRepository);
+        categoryConverter = new CategoryCommandToCategory(categoryRepository);
+        notesConverter = new NotesCommandToNotes(notesRepository);
+
+        UnitOfMeasure uom = new UnitOfMeasure();
+        uom.setId(1L);
+        when(unitOfMeasureRepository.findById(anyLong())).thenReturn(Optional.of(uom));
+
+        Ingredient ingredient = new Ingredient();
+        ingredient.setId(INGRED_ID_1);
+        when(ingredientRepository.findById(anyLong())).thenReturn(Optional.of(ingredient));
+
+        Category category = new Category();
+        category.setId(CAT_ID_1);
+        when(categoryRepository.findById(anyLong())).thenReturn(Optional.of(category));
+
+        Notes notes = new Notes();
+        notes.setId(NOTES_ID);
+        when(notesRepository.findById(anyLong())).thenReturn(Optional.of(notes));
+
+        Recipe recipe = new Recipe();
+        recipe.setId(RECIPE_ID);
+        when(recipeRepository.findById(anyLong())).thenReturn(Optional.of(recipe));
+
+
+        converter = new RecipeCommandToRecipe(ingredientConverter,categoryConverter,notesConverter,recipeRepository);
     }
 
     @Test
