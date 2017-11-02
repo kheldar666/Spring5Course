@@ -70,7 +70,7 @@ public class IngredientControllerTest {
         MockMvc mockMvc = MockMvcBuilders.standaloneSetup(ingredientController).build();
         IngredientCommand ingredientCommand = new IngredientCommand();
         mockMvc.perform(post("/recipe/1/ingredients/save", ingredientCommand))
-                .andExpect(status().isOk())
+                .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/recipe/1/ingredients/list"));
 
     }

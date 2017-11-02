@@ -2,6 +2,7 @@ package org.libermundi.recipe.controllers;
 
 import org.libermundi.recipe.commands.IngredientCommand;
 import org.libermundi.recipe.commands.RecipeCommand;
+import org.libermundi.recipe.commands.UnitOfMeasureCommand;
 import org.libermundi.recipe.services.IngredientService;
 import org.libermundi.recipe.services.RecipeService;
 import org.libermundi.recipe.services.UnitOfMeasureService;
@@ -52,6 +53,7 @@ public class IngredientController {
     public String add(Model model, @PathVariable Long recipeId) {
         RecipeCommand recipeCommand = recipeService.findById(recipeId);
         IngredientCommand ingredientCommand = new IngredientCommand();
+        ingredientCommand.setUnit(new UnitOfMeasureCommand());
 
         model.addAttribute("ingredient",ingredientCommand);
         model.addAttribute("recipe",recipeCommand);
@@ -62,7 +64,7 @@ public class IngredientController {
 
     @GetMapping
     @RequestMapping("/recipe/{recipeId}/ingredients/{id}/delete")
-    public String delete(Model model, @PathVariable Long recipeId, @PathVariable Long id) {
+    public String delete(@PathVariable Long recipeId, @PathVariable Long id) {
         ingredientService.deleteIngredient(recipeId,id);
 
         return "redirect:/recipe/" + recipeId + "/ingredients/list";

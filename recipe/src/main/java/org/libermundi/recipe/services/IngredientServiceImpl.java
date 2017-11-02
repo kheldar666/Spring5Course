@@ -3,8 +3,10 @@ package org.libermundi.recipe.services;
 import lombok.extern.slf4j.Slf4j;
 import org.libermundi.recipe.commands.IngredientCommand;
 import org.libermundi.recipe.commands.RecipeCommand;
+import org.libermundi.recipe.repositories.IngredientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -13,9 +15,12 @@ import java.util.Optional;
 public class IngredientServiceImpl implements IngredientService {
     private RecipeService recipeService;
 
+    private IngredientRepository ingredientRepository;
+
     @Autowired
-    public IngredientServiceImpl(RecipeService recipeService) {
+    public IngredientServiceImpl(RecipeService recipeService, IngredientRepository ingredientRepository) {
         this.recipeService = recipeService;
+        this.ingredientRepository = ingredientRepository;
     }
 
     public IngredientCommand findIngredient(Long recipeId, Long ingredientId) {
@@ -34,6 +39,7 @@ public class IngredientServiceImpl implements IngredientService {
     }
 
     @Override
+    @Transactional
     public IngredientCommand saveIngredient(Long recipeId, IngredientCommand ingredient) {
         RecipeCommand recipe = recipeService.findById(recipeId);
 
@@ -46,14 +52,8 @@ public class IngredientServiceImpl implements IngredientService {
 
 
     @Override
+    @Transactional
     public void deleteIngredient(Long recipeId, Long id) {
-        RecipeCommand recipe = recipeService.findById(recipeId);
-        IngredientCommand remove = new IngredientCommand();
-        remove.setId(id);
-
-        IngredientCommand original = findIngredient(recipeId,id);
-
-        recipe.getIngredients().remove(remove);
-        recipeService.saveRecipe(recipe);
+        ingredientRepository.deleteByIdAndRecipeId(id,recipeId);
     }
 }
