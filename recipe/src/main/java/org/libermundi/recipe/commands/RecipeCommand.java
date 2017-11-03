@@ -18,6 +18,7 @@ public class RecipeCommand extends IdentityCommand  {
     private String source;
     private String url;
     private String directions;
+    private Byte[] image;
     private Set<IngredientCommand> ingredients = new LinkedHashSet<>();
     private Difficulty difficulty;
     private NotesCommand notes;

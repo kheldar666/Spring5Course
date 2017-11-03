@@ -6,6 +6,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.libermundi.recipe.commands.IngredientCommand;
+import org.libermundi.recipe.commands.RecipeCommand;
+import org.libermundi.recipe.converters.IngredientToIngredientCommand;
+import org.libermundi.recipe.converters.UnitOfMeasureToUnitOfMeasureCommand;
 import org.libermundi.recipe.domain.Ingredient;
 import org.libermundi.recipe.domain.Recipe;
 import org.libermundi.recipe.domain.UnitOfMeasure;
@@ -17,12 +20,18 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
+
 import static org.junit.Assert.*;
 
 @Slf4j
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class IngredientServiceImplIT {
+    private static final String UPDATED_DESCRIPTION="UPDATED INGREDIENT";
+
+    private static final String ADDED_DESCRIPTION="UPDATED INGREDIENT";
+    private static final BigDecimal ADDED_AMOUNT=new BigDecimal(10);
 
     @Autowired
     IngredientService ingredientService;
@@ -35,6 +44,12 @@ public class IngredientServiceImplIT {
 
     @Autowired
     IngredientRepository ingredientRepository;
+
+    @Autowired
+    IngredientToIngredientCommand ingredientToIngredientCommand;
+
+    @Autowired
+    UnitOfMeasureToUnitOfMeasureCommand unitOfMeasureToUnitOfMeasureCommand;
 
     @Test
     @Transactional
@@ -54,23 +69,65 @@ public class IngredientServiceImplIT {
 
     @Test
     @Transactional
-    public void saveIngredient() throws Exception {
+    public void updateIngredient() throws Exception {
         // Given
         Iterable<Recipe> recipes = recipeRepository.findAll();
         Recipe testRecipe = recipes.iterator().next();
         Ingredient testIngredient = testRecipe.getIngredients().iterator().next();
 
+        UnitOfMeasure testUom = testIngredient.getUnit();
+
+
+        testIngredient.setDescription(UPDATED_DESCRIPTION);
         Iterable<UnitOfMeasure> uoms = unitOfMeasureRepository.findAll();
-        uoms.forEach(unitOfMeasure -> {
-            if (!unitOfMeasure.getId().equals(testIngredient.getUnit().getId())) {
-                testIngredient.setUnit(unitOfMeasure);
-                return;
-            }});
+        for (UnitOfMeasure uom : uoms) {
+            if (!uom.getId().equals(testIngredient.getUnit().getId())) {
+                testIngredient.setUnit(uom);
+                break;
+            }
+        };
+
+
+        Long ingredientId = Long.valueOf(testIngredient.getId());
+        Long recipeId = Long.valueOf(testRecipe.getId());
+
 
         // When
-
+        ingredientService.saveIngredient(recipeId, ingredientToIngredientCommand.convert(testIngredient));
 
         // Then
+        Recipe updatedRecipe = recipeRepository.findById(recipeId).get();
+
+        Ingredient updatedIngredient = updatedRecipe.getIngredients().stream()
+                .filter(ingredient -> ingredient.getId().equals(ingredientId)).findFirst().get();
+
+        assertTrue(updatedIngredient.getDescription().equals(UPDATED_DESCRIPTION));
+        assertTrue(!testUom.equals(updatedIngredient.getUnit()));
+    }
+
+    @Test
+    @Transactional
+    public void addIngredient() {
+        // Given
+        Iterable<Recipe> recipes = recipeRepository.findAll();
+        Recipe testRecipe = recipes.iterator().next();
+
+        int nbreIngredients = testRecipe.getIngredients().size();
+
+        IngredientCommand ingredient = new IngredientCommand();
+            ingredient.setDescription(ADDED_DESCRIPTION);
+            ingredient.setAmount(ADDED_AMOUNT);
+            ingredient.setUnit(
+                    unitOfMeasureToUnitOfMeasureCommand.convert(
+                            unitOfMeasureRepository.findAll().iterator().next()
+                    ));
+
+        // When
+        ingredientService.saveIngredient(testRecipe.getId(),ingredient);
+
+        // Then
+        Recipe updatedRecipe = recipeRepository.findById(testRecipe.getId()).get();
+        assertTrue(updatedRecipe.getIngredients().size() == nbreIngredients +1 );
     }
 
     @Test

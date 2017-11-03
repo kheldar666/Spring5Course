@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Recipe Form</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/4.0.0-beta-1/css/bootstrap.min.css}">
+</head>
+<body>
+<!--/*@thymesVar id="recipe" type="org.libermundi.recipe.domain.Recipe"*/-->
+<div class="container">
+    <form th:object="${recipe}" th:action="@{'/recipe/'+ ${recipe.id} +'/editimage'}" method="post" enctype="multipart/form-data">
+        <div class="card mt-4">
+            <h4 class="card-header" th:text="${(recipe.id != null)} ? 'Edit the Recipe Image' : 'Add a Recipe Image'">Edit/Add Image Recipe</h4>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col form-group">
+                        <label th:for="name">Recipe Image</label>
+                        <input type="file" class="form-control-file" name="imagefile"
+                               aria-describedby="imageHelp">
+                        <small id="imageHelp" class="text-muted">Select an image to upload</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card mt-4">
+            <div class="card-body text-right">
+                <button type="submit" class="btn btn-primary">Save</button>
+                <button type="reset" class="btn btn-warning">Reset</button>
+                <a name="cancel" id="cancel" class="btn btn-secondary" href="/" th:href="${cancelUrl}" role="button">Cancel</a>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        th:src="@{/webjars/jquery/3.2.1/jquery.min.js}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"
+        th:src="@{/webjars/popper/1.11.1/dist/umd/popper.min.js}"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.1/js/bootstrap.min.js"
+        th:src="@{/webjars/bootstrap/4.0.0-beta-1/js/bootstrap.min.js}"></script>
+</body>
+</html>
