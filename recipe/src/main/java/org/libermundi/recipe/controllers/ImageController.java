@@ -36,7 +36,7 @@ public class ImageController {
         model.addAttribute("recipe",command);
         model.addAttribute("cancelUrl", getRecipeUrl(command));
 
-        return "/recipe/imgform";
+        return "recipe/imgform";
     }
 
     @PostMapping("/recipe/{id}/editimage")

@@ -55,7 +55,7 @@ public class RecipeControllerTest {
 
         mockMvc.perform(get("/recipe/1/show"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("/recipe/show"))
+                .andExpect(view().name("recipe/show"))
                 .andExpect(model().attributeExists("recipe"));
     }
 
@@ -65,7 +65,7 @@ public class RecipeControllerTest {
 
         mockMvc.perform(get("/recipe/new"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("/recipe/form"))
+                .andExpect(view().name("recipe/form"))
                 .andExpect(model().attributeExists("recipe"));
     }
 
@@ -76,7 +76,7 @@ public class RecipeControllerTest {
 
         mockMvc.perform(get("/recipe/1/edit"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("/recipe/form"))
+                .andExpect(view().name("recipe/form"))
                 .andExpect(model().attributeExists("recipe"))
                 .andExpect(model().attributeExists("cancelUrl"));
     }
@@ -100,7 +100,7 @@ public class RecipeControllerTest {
         String viewName = recipeController.show(model, 1L);
 
         // Then
-        assertEquals("/recipe/show", viewName);
+        assertEquals("recipe/show", viewName);
         verify(recipeService, times(1)).findById(anyLong());
         verify(model, times(1)).addAttribute(eq("recipe"), argumentCaptor.capture());
 
@@ -117,7 +117,7 @@ public class RecipeControllerTest {
         String viewName = recipeController.edit(model, 1L);
 
         //Ten
-        assertEquals("/recipe/form", viewName);
+        assertEquals("recipe/form", viewName);
         verify(recipeService, times(1)).findById(anyLong());
         verify(model, times(1)).addAttribute(eq("recipe"), argumentCaptor.capture());
         verify(model, times(1)).addAttribute(eq("cancelUrl"), argumentCaptor2.capture());

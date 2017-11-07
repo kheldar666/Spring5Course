@@ -31,7 +31,7 @@ public class IngredientController {
 
         model.addAttribute("recipe",recipe);
 
-        return "/recipe/ingredients/list";
+        return "recipe/ingredients/list";
     }
 
     @GetMapping("/recipe/{recipeId}/ingredients/{id}/edit")
@@ -43,7 +43,7 @@ public class IngredientController {
         model.addAttribute("recipe",recipeCommand);
         model.addAttribute("uomList",unitOfMeasureService.findAll());
 
-        return "/recipe/ingredients/form";
+        return "recipe/ingredients/form";
     }
 
     @GetMapping("/recipe/{recipeId}/ingredients/add")
@@ -56,7 +56,7 @@ public class IngredientController {
         model.addAttribute("recipe",recipeCommand);
         model.addAttribute("uomList",unitOfMeasureService.findAll());
 
-        return "/recipe/ingredients/form";
+        return "recipe/ingredients/form";
     }
 
     @GetMapping("/recipe/{recipeId}/ingredients/{id}/delete")

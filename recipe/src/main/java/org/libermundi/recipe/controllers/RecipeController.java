@@ -19,11 +19,11 @@ public class RecipeController {
         this.recipeService = recipeService;
     }
 
-    @GetMapping("/recipe/{id}/show")
+    @GetMapping("recipe/{id}/show")
     public String show(Model model, @PathVariable Long id) {
         model.addAttribute("recipe",recipeService.findById(id));
 
-        return "/recipe/show";
+        return "recipe/show";
     }
 
     @GetMapping("/recipe/{id}/edit")
@@ -32,7 +32,7 @@ public class RecipeController {
         model.addAttribute("recipe",command);
         model.addAttribute("cancelUrl",getCancelUrl(command));
 
-        return "/recipe/form";
+        return "recipe/form";
     }
 
     @GetMapping("/recipe/{id}/delete")
@@ -47,7 +47,7 @@ public class RecipeController {
         model.addAttribute("recipe",command);
         model.addAttribute("cancelUrl",getCancelUrl(command));
 
-        return "/recipe/form";
+        return "recipe/form";
     }
 
     @PostMapping("/recipe/save")
