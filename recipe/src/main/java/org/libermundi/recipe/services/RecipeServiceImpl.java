@@ -6,6 +6,7 @@ import org.libermundi.recipe.commands.RecipeCommand;
 import org.libermundi.recipe.converters.RecipeCommandToRecipe;
 import org.libermundi.recipe.converters.RecipeToRecipeCommand;
 import org.libermundi.recipe.domain.Recipe;
+import org.libermundi.recipe.exceptions.NotFoundException;
 import org.libermundi.recipe.repositories.RecipeRepository;
 import org.libermundi.recipe.utils.NullAwareBeanUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,8 +44,8 @@ public class RecipeServiceImpl implements RecipeService {
     public RecipeCommand findById(Long id) {
         Optional<Recipe> recipeOptional = recipeRepository.findById(id);
 
-        if(! recipeOptional.isPresent()){
-            throw new RuntimeException("Recipe not Found !");
+        if(!recipeOptional.isPresent()){
+            throw new NotFoundException("Recipe not Found !");
         }
 
         return recipeToRecipeCommand.convert(recipeOptional.get());

@@ -7,6 +7,7 @@ import org.libermundi.recipe.commands.RecipeCommand;
 import org.libermundi.recipe.converters.RecipeCommandToRecipe;
 import org.libermundi.recipe.converters.RecipeToRecipeCommand;
 import org.libermundi.recipe.domain.Recipe;
+import org.libermundi.recipe.exceptions.NotFoundException;
 import org.libermundi.recipe.repositories.RecipeRepository;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -75,6 +76,18 @@ public class RecipeServiceImplTest {
         assertEquals(recipe.getId(), retrievedRecipe.getId());
 
         verify(recipeRepository,times(1)).findById(anyLong());
+    }
+
+    @Test( expected = NotFoundException.class )
+    public void findByIdNotFound() {
+        // Given
+        Optional<Recipe> recipeOptional = Optional.empty();
+
+        // When
+        when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
+
+        // Then
+        RecipeCommand recipe = recipeService.findById(1L);
     }
 
 }

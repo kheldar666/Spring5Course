@@ -5,6 +5,7 @@ import org.junit.Test;
 import org.libermundi.recipe.commands.RecipeCommand;
 import org.libermundi.recipe.converters.*;
 import org.libermundi.recipe.domain.Recipe;
+import org.libermundi.recipe.exceptions.NotFoundException;
 import org.libermundi.recipe.services.RecipeService;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
@@ -36,6 +37,8 @@ public class RecipeControllerTest {
 
     RecipeCommand recipe;
 
+    MockMvc mockMvc;
+
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
@@ -44,15 +47,13 @@ public class RecipeControllerTest {
         recipe = new RecipeCommand();
         recipe.setName("Test Recipe");
         recipe.setId(1L);
-
+        mockMvc = MockMvcBuilders.standaloneSetup(recipeController).build();
         when(recipeService.findById(anyLong())).thenReturn(recipe);
     }
 
 
     @Test
     public void testGetShowView() throws Exception {
-        MockMvc mockMvc = MockMvcBuilders.standaloneSetup(recipeController).build();
-
         mockMvc.perform(get("/recipe/1/show"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("recipe/show"))
@@ -61,8 +62,6 @@ public class RecipeControllerTest {
 
     @Test
     public void testGetNewView() throws Exception {
-        MockMvc mockMvc = MockMvcBuilders.standaloneSetup(recipeController).build();
-
         mockMvc.perform(get("/recipe/new"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("recipe/form"))
@@ -72,8 +71,6 @@ public class RecipeControllerTest {
 
     @Test
     public void testGetUpdateView() throws Exception {
-        MockMvc mockMvc = MockMvcBuilders.standaloneSetup(recipeController).build();
-
         mockMvc.perform(get("/recipe/1/edit"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("recipe/form"))
@@ -84,8 +81,6 @@ public class RecipeControllerTest {
 
     @Test
     public void testGetDeleteView() throws Exception {
-        MockMvc mockMvc = MockMvcBuilders.standaloneSetup(recipeController).build();
-
         mockMvc.perform(get("/recipe/1/delete"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/"));
@@ -137,4 +132,15 @@ public class RecipeControllerTest {
         verify(recipeService, times(1)).deleteById(anyLong());
     }
 
+
+    @Test
+    public void findByIdNotFound() throws Exception {
+        // When
+        when(recipeService.findById(anyLong())).thenThrow(NotFoundException.class);
+
+        // Then
+        mockMvc.perform(get("/recipe/4/show"))
+                .andExpect(status().isNotFound())
+                .andExpect(view().name("errors/404"));
+    }
 }

@@ -1,15 +1,20 @@
 package org.libermundi.recipe.controllers;
 
 
+import lombok.extern.slf4j.Slf4j;
 import org.libermundi.recipe.commands.RecipeCommand;
 import org.libermundi.recipe.converters.RecipeToRecipeCommand;
 import org.libermundi.recipe.domain.Recipe;
+import org.libermundi.recipe.exceptions.NotFoundException;
 import org.libermundi.recipe.services.RecipeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
+@Slf4j
 @Controller
 public class RecipeController {
     private final RecipeService recipeService;
@@ -57,7 +62,26 @@ public class RecipeController {
         return "redirect:/recipe/" + savedRecipeCommand.getId() + "/show";
     }
 
+    @ExceptionHandler(NotFoundException.class)
+    public ModelAndView handleNotFound(Exception e) {
+        log.error("Handling 'NotFoundException'");
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("errors/404");
+        modelAndView.setStatus(HttpStatus.NOT_FOUND);
+        modelAndView.addObject("exception",e);
+        return modelAndView;
+    }
 
+
+    @ExceptionHandler(NumberFormatException.class)
+    public ModelAndView handleNumberFormatException(Exception e) {
+        log.error("Handling 'NumberFormatException'");
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("errors/400");
+        modelAndView.setStatus(HttpStatus.BAD_REQUEST);
+        modelAndView.addObject("exception",e);
+        return modelAndView;
+    }
     private String getCancelUrl(RecipeCommand command){
             if(command.getId() == null) {
                 return "/";
