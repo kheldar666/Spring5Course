@@ -1,0 +1,11 @@
+create table category (id bigint not null auto_increment, created datetime, updated datetime, name varchar(255), primary key (id)) engine=InnoDB;
+create table ingredient (id bigint not null auto_increment, created datetime, updated datetime, amount decimal(19,2), description varchar(255), recipe_id bigint, unit_id bigint, primary key (id)) engine=InnoDB;
+create table notes (id bigint not null auto_increment, created datetime, updated datetime, notes longtext, primary key (id)) engine=InnoDB;
+create table recipe (id bigint not null auto_increment, created datetime, updated datetime, cook_time integer, difficulty varchar(255), directions longtext, image longblob, name varchar(255), prep_time integer, servings integer, source varchar(255), url varchar(255), notes_id bigint, primary key (id)) engine=InnoDB;
+create table recipe_categories (recipes_id bigint not null, categories_id bigint not null, primary key (recipes_id, categories_id)) engine=InnoDB;
+create table unit_of_measure (id bigint not null auto_increment, created datetime, updated datetime, name varchar(255), unit varchar(255), primary key (id)) engine=InnoDB;
+alter table ingredient add constraint FKj0s4ywmqqqw4h5iommigh5yja foreign key (recipe_id) references recipe (id);
+alter table ingredient add constraint FKpfwjb4f88rh2ovgp30e8b4tlk foreign key (unit_id) references unit_of_measure (id);
+alter table recipe add constraint FK37al6kcbdasgfnut9xokktie9 foreign key (notes_id) references notes (id);
+alter table recipe_categories add constraint FKk2ac22txrlp7y1nsg8sddtjmr foreign key (categories_id) references category (id);
+alter table recipe_categories add constraint FKt3vn6qofiliji607w7q5ovc7 foreign key (recipes_id) references recipe (id);

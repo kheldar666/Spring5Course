@@ -6,6 +6,7 @@ import org.libermundi.recipe.repositories.RecipeRepository;
 import org.libermundi.recipe.repositories.UnitOfMeasureRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
+import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
+@Profile("default")
 public class ApplicationLoader implements ApplicationListener<ContextRefreshedEvent> {
     private CategoryRepository categoryRepository;
     private RecipeRepository recipeRepository;
