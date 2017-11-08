@@ -11,8 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.validation.Valid;
 
 @Slf4j
 @Controller
@@ -56,32 +59,17 @@ public class RecipeController {
     }
 
     @PostMapping("/recipe/save")
-    public String saveOrUpdate(@ModelAttribute RecipeCommand command) {
+    public String saveOrUpdate(@Valid @ModelAttribute RecipeCommand command, BindingResult result) {
+        if(result.hasErrors()) {
+            result.getAllErrors().forEach(objectError -> {
+                log.error(objectError.toString());
+            });
+        }
         RecipeCommand savedRecipeCommand = recipeService.saveRecipe(command);
 
         return "redirect:/recipe/" + savedRecipeCommand.getId() + "/show";
     }
 
-    @ExceptionHandler(NotFoundException.class)
-    public ModelAndView handleNotFound(Exception e) {
-        log.error("Handling 'NotFoundException'");
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("errors/404");
-        modelAndView.setStatus(HttpStatus.NOT_FOUND);
-        modelAndView.addObject("exception",e);
-        return modelAndView;
-    }
-
-
-    @ExceptionHandler(NumberFormatException.class)
-    public ModelAndView handleNumberFormatException(Exception e) {
-        log.error("Handling 'NumberFormatException'");
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("errors/400");
-        modelAndView.setStatus(HttpStatus.BAD_REQUEST);
-        modelAndView.addObject("exception",e);
-        return modelAndView;
-    }
     private String getCancelUrl(RecipeCommand command){
             if(command.getId() == null) {
                 return "/";

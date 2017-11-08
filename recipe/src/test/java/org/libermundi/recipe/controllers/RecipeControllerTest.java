@@ -3,6 +3,7 @@ package org.libermundi.recipe.controllers;
 import org.junit.Before;
 import org.junit.Test;
 import org.libermundi.recipe.commands.RecipeCommand;
+import org.libermundi.recipe.controllers.advice.ExceptionHandlerControllerAdvice;
 import org.libermundi.recipe.converters.*;
 import org.libermundi.recipe.domain.Recipe;
 import org.libermundi.recipe.exceptions.NotFoundException;
@@ -10,18 +11,21 @@ import org.libermundi.recipe.services.RecipeService;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.ui.Model;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
@@ -47,7 +51,10 @@ public class RecipeControllerTest {
         recipe = new RecipeCommand();
         recipe.setName("Test Recipe");
         recipe.setId(1L);
-        mockMvc = MockMvcBuilders.standaloneSetup(recipeController).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(recipeController)
+                .setControllerAdvice(new ExceptionHandlerControllerAdvice())
+                .build();
+
         when(recipeService.findById(anyLong())).thenReturn(recipe);
     }
 
@@ -150,5 +157,23 @@ public class RecipeControllerTest {
         mockMvc.perform(get("/recipe/asdf/show"))
                 .andExpect(status().isBadRequest())
                 .andExpect(view().name("errors/400"));
+    }
+
+    @Test
+    public void testPostRecipeFormValidation() throws Exception {
+        RecipeCommand recipeCommand = new RecipeCommand();
+        recipeCommand.setId(3L);
+
+        when(recipeService.saveRecipe(any())).thenReturn(recipeCommand);
+
+        mockMvc.perform(post("/recipe/save")
+            .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+            .param("id", "")
+                .param("directions","Some directions")
+                .param("name", "Some name")
+        )
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/recipe/3/show"));
+
     }
 }
