@@ -16,7 +16,7 @@ import static org.junit.Assert.assertNull;
 public class UnitOfMeasureToUnitOfMeasureCommandTest {
 
     public static final String NAME = "description";
-    public static final Long LONG_VALUE = new Long(1L);
+    public static final String LONG_VALUE = "265461315431541";
 
     UnitOfMeasureToUnitOfMeasureCommand converter;
 

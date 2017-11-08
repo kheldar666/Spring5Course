@@ -15,10 +15,11 @@ import java.util.Optional;
 
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 public class RecipeCommandToRecipeTest {
-    public static final Long RECIPE_ID = 1L;
+    public static final String RECIPE_ID = "1234567879";
     public static final Integer COOK_TIME = Integer.valueOf("5");
     public static final Integer PREP_TIME = Integer.valueOf("7");
     public static final String NAME = "My Recipe";
@@ -27,11 +28,11 @@ public class RecipeCommandToRecipeTest {
     public static final Integer SERVINGS = Integer.valueOf("3");
     public static final String SOURCE = "Source";
     public static final String URL = "Some URL";
-    public static final Long CAT_ID_1 = 1L;
-    public static final Long CAT_ID_2 = 2L;
-    public static final Long INGRED_ID_1 = 3L;
-    public static final Long INGRED_ID_2 = 4L;
-    public static final Long NOTES_ID = 9L;
+    public static final String CAT_ID_1 = "12345678791";
+    public static final String CAT_ID_2 = "12345678792";
+    public static final String INGRED_ID_1 = "12345678793";
+    public static final String INGRED_ID_2 = "12345678794";
+    public static final String NOTES_ID = "12345678795";
 
     RecipeCommandToRecipe converter;
 
@@ -70,24 +71,24 @@ public class RecipeCommandToRecipeTest {
         notesConverter = new NotesCommandToNotes(notesRepository);
 
         UnitOfMeasure uom = new UnitOfMeasure();
-        uom.setId(1L);
-        when(unitOfMeasureRepository.findById(anyLong())).thenReturn(Optional.of(uom));
+        uom.setId("313131313161320651");
+        when(unitOfMeasureRepository.findById(anyString())).thenReturn(Optional.of(uom));
 
         Ingredient ingredient = new Ingredient();
         ingredient.setId(INGRED_ID_1);
-        when(ingredientRepository.findById(anyLong())).thenReturn(Optional.of(ingredient));
+        when(ingredientRepository.findById(anyString())).thenReturn(Optional.of(ingredient));
 
         Category category = new Category();
         category.setId(CAT_ID_1);
-        when(categoryRepository.findById(anyLong())).thenReturn(Optional.of(category));
+        when(categoryRepository.findById(anyString())).thenReturn(Optional.of(category));
 
         Notes notes = new Notes();
         notes.setId(NOTES_ID);
-        when(notesRepository.findById(anyLong())).thenReturn(Optional.of(notes));
+        when(notesRepository.findById(anyString())).thenReturn(Optional.of(notes));
 
         Recipe recipe = new Recipe();
         recipe.setId(RECIPE_ID);
-        when(recipeRepository.findById(anyLong())).thenReturn(Optional.of(recipe));
+        when(recipeRepository.findById(anyString())).thenReturn(Optional.of(recipe));
 
 
         converter = new RecipeCommandToRecipe(ingredientConverter,categoryConverter,notesConverter,recipeRepository);

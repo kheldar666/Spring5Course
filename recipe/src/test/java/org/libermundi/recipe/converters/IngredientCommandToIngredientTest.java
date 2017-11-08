@@ -18,13 +18,14 @@ import java.util.Optional;
 
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 public class IngredientCommandToIngredientTest {
-    private static final Long ID=1L;
+    private static final String ID="1234567879";
     private static final String DESCRIPTION="Ingredient Description";
     private static final BigDecimal AMOUNT=new BigDecimal(4);
-    private static final Long UOM_ID=2L;
+    private static final String UOM_ID="12345678790";
 
 
     Converter<IngredientCommand,Ingredient> converter;
@@ -54,11 +55,11 @@ public class IngredientCommandToIngredientTest {
 
         Ingredient ingredient = new Ingredient();
         ingredient.setId(ID);
-        when(ingredientRepository.findById(anyLong())).thenReturn(Optional.of(ingredient));
+        when(ingredientRepository.findById(anyString())).thenReturn(Optional.of(ingredient));
 
         UnitOfMeasure unitOfMeasure = new UnitOfMeasure();
         unitOfMeasure.setId(UOM_ID);
-        when(unitOfMeasureRepository.findById(anyLong())).thenReturn(Optional.of(unitOfMeasure));
+        when(unitOfMeasureRepository.findById(anyString())).thenReturn(Optional.of(unitOfMeasure));
     }
 
     @Test

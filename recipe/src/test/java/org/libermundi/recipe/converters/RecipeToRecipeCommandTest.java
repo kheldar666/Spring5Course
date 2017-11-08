@@ -12,7 +12,7 @@ import static org.junit.Assert.assertNull;
 
 public class RecipeToRecipeCommandTest {
 
-    public static final Long RECIPE_ID = 1L;
+    public static final String RECIPE_ID = "1234567879";
     public static final Integer COOK_TIME = Integer.valueOf("5");
     public static final Integer PREP_TIME = Integer.valueOf("7");
     public static final String NAME = "My Recipe";
@@ -21,11 +21,12 @@ public class RecipeToRecipeCommandTest {
     public static final Integer SERVINGS = Integer.valueOf("3");
     public static final String SOURCE = "Source";
     public static final String URL = "Some URL";
-    public static final Long CAT_ID_1 = 1L;
-    public static final Long CAT_ID2 = 2L;
-    public static final Long INGRED_ID_1 = 3L;
-    public static final Long INGRED_ID_2 = 4L;
-    public static final Long NOTES_ID = 9L;
+    public static final String CAT_ID_1 = "12345678791";
+    public static final String CAT_ID_2 = "12345678792";
+    public static final String INGRED_ID_1 = "12345678793";
+    public static final String INGRED_ID_2 = "12345678794";
+    public static final String NOTES_ID = "12345678795";
+
     RecipeToRecipeCommand converter;
 
     @Before
@@ -69,7 +70,7 @@ public class RecipeToRecipeCommandTest {
         category.setId(CAT_ID_1);
 
         Category category2 = new Category();
-        category2.setId(CAT_ID2);
+        category2.setId(CAT_ID_2);
 
         recipe.getCategories().add(category);
         recipe.getCategories().add(category2);

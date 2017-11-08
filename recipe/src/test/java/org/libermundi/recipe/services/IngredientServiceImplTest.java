@@ -32,20 +32,20 @@ public class IngredientServiceImplTest {
     public void findIngredient() throws Exception {
         // Given
         IngredientCommand ingredient = new IngredientCommand();
-        ingredient.setId(7L);
+        ingredient.setId("35161615651");
 
         RecipeCommand recipe = new RecipeCommand();
-        recipe.setId(1L);
+        recipe.setId("61651651651");
         recipe.getIngredients().add(ingredient);
 
-        when(recipeService.findById(1L)).thenReturn(recipe);
+        when(recipeService.findById("61651651651")).thenReturn(recipe);
 
         // When
-        IngredientCommand found = ingredientService.findIngredient(1L,7L);
+        IngredientCommand found = ingredientService.findIngredient("61651651651","35161615651");
 
 
         // Then
-        verify(recipeService,times(1)).findById(anyLong());
+        verify(recipeService,times(1)).findById(anyString());
         assertEquals(ingredient.getId(), found.getId());
     }
 

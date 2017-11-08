@@ -13,10 +13,11 @@ import java.util.Optional;
 
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 public class UnitOfMeasureCommandToUnitOfMeasureTest {
-    private static final Long ID=1L;
+    private static final String ID="6514651651681";
     private static final String NAME="Milliliter";
     private static final String UNIT="ml";
 
@@ -35,7 +36,7 @@ public class UnitOfMeasureCommandToUnitOfMeasureTest {
 
         UnitOfMeasure uom = new UnitOfMeasure();
         uom.setId(ID);
-        when(unitOfMeasureRepository.findById(anyLong())).thenReturn(Optional.of(uom));
+        when(unitOfMeasureRepository.findById(anyString())).thenReturn(Optional.of(uom));
 
 
         converter = new UnitOfMeasureCommandToUnitOfMeasure(unitOfMeasureRepository);

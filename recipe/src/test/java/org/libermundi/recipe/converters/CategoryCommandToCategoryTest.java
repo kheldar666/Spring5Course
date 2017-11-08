@@ -13,10 +13,11 @@ import java.util.Optional;
 
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 public class CategoryCommandToCategoryTest {
-    private static final Long ID = 1L;
+    private static final String ID = "1234567879";
     private static final String NAME = "Category Name";
 
 
@@ -37,7 +38,7 @@ public class CategoryCommandToCategoryTest {
 
         Category category = new Category();
         category.setId(ID);
-        when(categoryRepository.findById(anyLong())).thenReturn(Optional.of(category));
+        when(categoryRepository.findById(anyString())).thenReturn(Optional.of(category));
     }
 
     @Test

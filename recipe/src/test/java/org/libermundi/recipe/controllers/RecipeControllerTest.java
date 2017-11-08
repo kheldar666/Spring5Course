@@ -18,9 +18,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.ui.Model;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -50,12 +48,12 @@ public class RecipeControllerTest {
 
         recipe = new RecipeCommand();
         recipe.setName("Test Recipe");
-        recipe.setId(1L);
+        recipe.setId("1234567879");
         mockMvc = MockMvcBuilders.standaloneSetup(recipeController)
                 .setControllerAdvice(new ExceptionHandlerControllerAdvice())
                 .build();
 
-        when(recipeService.findById(anyLong())).thenReturn(recipe);
+        when(recipeService.findById(anyString())).thenReturn(recipe);
     }
 
 
@@ -99,11 +97,11 @@ public class RecipeControllerTest {
         ArgumentCaptor<Recipe> argumentCaptor= ArgumentCaptor.forClass(Recipe.class);
 
         // When
-        String viewName = recipeController.show(model, 1L);
+        String viewName = recipeController.show(model, "1234567879");
 
         // Then
         assertEquals("recipe/show", viewName);
-        verify(recipeService, times(1)).findById(anyLong());
+        verify(recipeService, times(1)).findById(anyString());
         verify(model, times(1)).addAttribute(eq("recipe"), argumentCaptor.capture());
 
         assertEquals("Test Recipe", recipe.getName());
@@ -116,11 +114,11 @@ public class RecipeControllerTest {
         ArgumentCaptor<String> argumentCaptor2= ArgumentCaptor.forClass(String.class);
 
         // When
-        String viewName = recipeController.edit(model, 1L);
+        String viewName = recipeController.edit(model, "1234567879");
 
         //Ten
         assertEquals("recipe/form", viewName);
-        verify(recipeService, times(1)).findById(anyLong());
+        verify(recipeService, times(1)).findById(anyString());
         verify(model, times(1)).addAttribute(eq("recipe"), argumentCaptor.capture());
         verify(model, times(1)).addAttribute(eq("cancelUrl"), argumentCaptor2.capture());
 
@@ -132,18 +130,18 @@ public class RecipeControllerTest {
     @Test
     public void delete() throws Exception {
         // When
-        String viewName = recipeController.delete(1L);
+        String viewName = recipeController.delete("1234567879");
 
         // Then
         assertEquals("redirect:/", viewName);
-        verify(recipeService, times(1)).deleteById(anyLong());
+        verify(recipeService, times(1)).deleteById(anyString());
     }
 
 
     @Test
     public void findByIdNotFound() throws Exception {
         // When
-        when(recipeService.findById(anyLong())).thenThrow(NotFoundException.class);
+        when(recipeService.findById(anyString())).thenThrow(NotFoundException.class);
 
         // Then
         mockMvc.perform(get("/recipe/4/show"))
@@ -162,7 +160,7 @@ public class RecipeControllerTest {
     @Test
     public void testPostRecipeFormValidation() throws Exception {
         RecipeCommand recipeCommand = new RecipeCommand();
-        recipeCommand.setId(3L);
+        recipeCommand.setId("1234567879");
 
         when(recipeService.saveRecipe(any())).thenReturn(recipeCommand);
 
@@ -180,7 +178,7 @@ public class RecipeControllerTest {
     @Test
     public void testPostRecipeFormValidationFail() throws Exception {
         RecipeCommand recipeCommand = new RecipeCommand();
-        recipeCommand.setId(3L);
+        recipeCommand.setId("1234567879");
 
         when(recipeService.saveRecipe(any())).thenReturn(recipeCommand);
 

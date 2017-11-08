@@ -39,8 +39,8 @@ public class IngredientControllerTest {
         MockitoAnnotations.initMocks(this);
         ingredientController = new IngredientController(recipeService,ingredientService,unitOfMeasureService);
 
-        when(recipeService.findById(1L)).thenReturn(new RecipeCommand());
-        when(ingredientService.findIngredient(1L,1L)).thenReturn(new IngredientCommand());
+        when(recipeService.findById("1234567879")).thenReturn(new RecipeCommand());
+        when(ingredientService.findIngredient("1234567879","1234567879")).thenReturn(new IngredientCommand());
     }
 
     @Test

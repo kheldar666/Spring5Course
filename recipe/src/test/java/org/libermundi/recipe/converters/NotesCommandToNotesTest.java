@@ -13,11 +13,12 @@ import java.util.Optional;
 
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 public class NotesCommandToNotesTest {
 
-    private static final Long ID = 1L;
+    private static final String ID = "1234567879";
     private static final String NOTES = "Somes notes";
 
     Converter<NotesCommand, Notes> converter;
@@ -32,7 +33,7 @@ public class NotesCommandToNotesTest {
 
         Notes notes = new Notes();
         notes.setId(ID);
-        when(notesRepository.findById(anyLong())).thenReturn(Optional.of(notes));
+        when(notesRepository.findById(anyString())).thenReturn(Optional.of(notes));
 
         converter = new NotesCommandToNotes(notesRepository);
     }

@@ -8,7 +8,6 @@ import java.util.Set;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @ToString(of = {"name"},callSuper = true)
 public class Recipe extends Identity{
     private String name;
@@ -29,6 +28,9 @@ public class Recipe extends Identity{
     private Set<Ingredient> ingredients = new LinkedHashSet<>();
 
     private Set<Category> categories = new LinkedHashSet<>();
+
+    public Recipe() {
+    }
 
     public Recipe(String name) {
         this.name = name;

@@ -88,8 +88,8 @@ public class IngredientServiceImplIT {
         };
 
 
-        Long ingredientId = Long.valueOf(testIngredient.getId());
-        Long recipeId = Long.valueOf(testRecipe.getId());
+        String ingredientId = testIngredient.getId();
+        String recipeId = testRecipe.getId();
 
 
         // When

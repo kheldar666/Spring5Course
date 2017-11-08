@@ -59,23 +59,23 @@ public class RecipeServiceImplTest {
     public void findById() {
         // Given
         Recipe recipe = new Recipe();
-        recipe.setId(1L);
+        recipe.setId("1234567879");
 
         RecipeCommand command = new RecipeCommand();
-        command.setId(1L);
+        command.setId("1234567879");
 
         Optional<Recipe> recipeOptional = Optional.of(recipe);
 
-        when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
+        when(recipeRepository.findById(anyString())).thenReturn(recipeOptional);
         when(recipeToRecipeCommand.convert(any(Recipe.class))).thenReturn(command);
 
         // When
-        RecipeCommand retrievedRecipe = recipeService.findById(1L);
+        RecipeCommand retrievedRecipe = recipeService.findById("1234567879");
 
         // Then
         assertEquals(recipe.getId(), retrievedRecipe.getId());
 
-        verify(recipeRepository,times(1)).findById(anyLong());
+        verify(recipeRepository,times(1)).findById(anyString());
     }
 
     @Test( expected = NotFoundException.class )
@@ -84,10 +84,10 @@ public class RecipeServiceImplTest {
         Optional<Recipe> recipeOptional = Optional.empty();
 
         // When
-        when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
+        when(recipeRepository.findById(anyString())).thenReturn(recipeOptional);
 
         // Then
-        RecipeCommand recipe = recipeService.findById(1L);
+        RecipeCommand recipe = recipeService.findById("1234567879");
     }
 
 }
