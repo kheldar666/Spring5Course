@@ -59,14 +59,17 @@ public class RecipeController {
     }
 
     @PostMapping("/recipe/save")
-    public String saveOrUpdate(@Valid @ModelAttribute RecipeCommand command, BindingResult result) {
-        if(result.hasErrors()) {
-            result.getAllErrors().forEach(objectError -> {
+    public String saveOrUpdate(@Valid @ModelAttribute("recipe") RecipeCommand command, BindingResult bindingResult,Model model) {
+
+        if(bindingResult.hasErrors()) {
+            bindingResult.getAllErrors().forEach(objectError -> {
                 log.error(objectError.toString());
             });
+            model.addAttribute("cancelUrl",getCancelUrl(command));
+            return "recipe/form";
         }
-        RecipeCommand savedRecipeCommand = recipeService.saveRecipe(command);
 
+        RecipeCommand savedRecipeCommand = recipeService.saveRecipe(command);
         return "redirect:/recipe/" + savedRecipeCommand.getId() + "/show";
     }
 

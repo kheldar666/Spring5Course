@@ -9,17 +9,25 @@
 <body>
 <!--/*@thymesVar id="recipe" type="org.libermundi.recipe.domain.Recipe"*/-->
 <div class="container">
-    <form th:object="${recipe}" th:action="@{/recipe/save}" method="post" >
+    <form th:object="${recipe}" th:action="@{/recipe/save}" method="post" enctype="application/x-www-form-urlencoded">
         <input type="hidden" th:field="*{id}">
         <div class="card mt-4">
             <h4 class="card-header" th:text="${(recipe.id != null)} ? 'Edit a Recipe' : 'Create a Recipe'">Create/Edit Recipe</h4>
             <div class="card-body">
+                <div class="row" th:if="${#fields.hasAnyErrors()}">
+                    <div class="col alert alert-warning">Please Fix the Errors bellow.</div>
+                </div>
                 <div class="row">
                     <div class="col form-group">
                         <label th:for="name">Recipe Name</label>
                         <input type="text" th:field="*{name}"
-                               class="form-control" placeholder="Name of the Recipe" aria-describedby="helpName">
-                        <small id="helpName" class="text-muted">indicate the name of the Recipe</small>
+                               class="form-control" placeholder="Name of the Recipe" aria-describedby="helpName" th:classappend="${(#fields.hasErrors('name'))? 'is-invalid' :'is-valid'}" required>
+                        <small id="helpName" class="text-muted" th:unless="${#fields.hasErrors('name')}">Indicate the name of the Recipe</small>
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('name')}">
+                            <ul>
+                                <li th:each="error : ${#fields.errors('name')}" th:text="${error}"/>
+                            </ul>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
@@ -34,7 +42,12 @@
                     <div class="col-4 form-group">
                         <label th:for="prepTime">Prep Time (mins)</label>
                         <input type="text" class="form-control" th:field="*{prepTime}" aria-describedby="helpPrep" placeholder="Prep time in mins">
-                        <small id="helpPrep" class="form-text text-muted">How long to prepare this recipe?</small>
+                        <small id="helpPrep" class="form-text text-muted">
+                            <ul th:if="${#fields.hasErrors('prepTime')}">
+                                <li th:each="error : ${#fields.errors('prepTime')}" th:text="${error}"/>
+                            </ul>
+                            <span th:unless="${#fields.hasErrors('prepTime')}">How long to prepare this recipe?</span>
+                        </small>
                     </div>
                     <div class="col-4 form-group">
                         <label th:for="servings">Servings</label>
@@ -65,8 +78,8 @@
                     </div>
                     <div class="col-4 form-group">
                         <label th:for="url">URL</label>
-                        <input type="text" class="form-control" th:field="*{url}" aria-describedby="helpPrep" placeholder="http://www.example.com/path/to/recipe">
-                        <small id="helpPrep" class="form-text text-muted">A link to the original recipe</small>
+                        <input type="text" class="form-control" th:field="*{url}" aria-describedby="helpUrl" placeholder="http://www.example.com/path/to/recipe">
+                        <small id="helpUrl" class="form-text text-muted">A link to the original recipe</small>
                     </div>
                 </div>
             </div>
