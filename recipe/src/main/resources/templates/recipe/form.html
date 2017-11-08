@@ -21,7 +21,7 @@
                     <div class="col form-group">
                         <label th:for="name">Recipe Name</label>
                         <input type="text" th:field="*{name}"
-                               class="form-control" placeholder="Name of the Recipe" aria-describedby="helpName" th:classappend="${(#fields.hasErrors('name'))? 'is-invalid' :'is-valid'}" required>
+                               class="form-control" placeholder="Name of the Recipe" aria-describedby="helpName" th:classappend="${(#fields.hasErrors('name'))? 'is-invalid':''}" required>
                         <small id="helpName" class="text-muted" th:unless="${#fields.hasErrors('name')}">Indicate the name of the Recipe</small>
                         <div class="invalid-feedback" th:if="${#fields.hasErrors('name')}">
                             <ul>
@@ -41,30 +41,40 @@
                 <div class="row">
                     <div class="col-4 form-group">
                         <label th:for="prepTime">Prep Time (mins)</label>
-                        <input type="text" class="form-control" th:field="*{prepTime}" aria-describedby="helpPrep" placeholder="Prep time in mins">
-                        <small id="helpPrep" class="form-text text-muted">
-                            <ul th:if="${#fields.hasErrors('prepTime')}">
+                        <input type="text" class="form-control" th:field="*{prepTime}" aria-describedby="helpPrep" placeholder="Prep time in mins" th:classappend="${(#fields.hasErrors('prepTime'))? 'is-invalid':''}">
+                        <small id="helpPrep" class="form-text text-muted" th:unless="${#fields.hasErrors('prepTime')}">How long to prepare this recipe?</small>
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('prepTime')}">
+                            <ul>
                                 <li th:each="error : ${#fields.errors('prepTime')}" th:text="${error}"/>
                             </ul>
-                            <span th:unless="${#fields.hasErrors('prepTime')}">How long to prepare this recipe?</span>
-                        </small>
+                        </div>
                     </div>
                     <div class="col-4 form-group">
                         <label th:for="servings">Servings</label>
-                        <input type="text" class="form-control" th:field="*{servings}" aria-describedby="helpServ" placeholder="Number of Servings">
-                        <small id="helpServ" class="form-text text-muted">How many people can share this dish?</small>
+                        <input type="text" class="form-control" th:field="*{servings}" aria-describedby="helpServ" placeholder="Number of Servings" th:classappend="${(#fields.hasErrors('servings'))? 'is-invalid':''}">
+                        <small id="helpServ" class="form-text text-muted" th:unless="${#fields.hasErrors('servings')}">How many people can share this dish?</small>
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('servings')}">
+                            <ul>
+                                <li th:each="error : ${#fields.errors('servings')}" th:text="${error}"/>
+                            </ul>
+                        </div>
                     </div>
                     <div class="col-4 form-group">
                         <label th:for="source">Source</label>
                         <input type="text" class="form-control" th:field="*{source}" aria-describedby="helpSrc" placeholder="Source of the recipe">
-                        <small id="helpSrc" class="form-text text-muted">Where did you find out about this recipe?</small>
+                        <small id="helpSrc" class="form-text text-muted" th:unless="${#fields.hasErrors('source')}">Where did you find out about this recipe?</small>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-4 form-group">
                         <label th:for="cookTime">Cook Time (mins)</label>
-                        <input type="text" class="form-control" th:field="*{cookTime}" aria-describedby="helpCook" placeholder="Cook time in mins">
-                        <small id="helpCook" class="form-text text-muted">How long to cook this recipe?</small>
+                        <input type="text" class="form-control" th:field="*{cookTime}" aria-describedby="helpCook" placeholder="Cook time in mins" th:classappend="${(#fields.hasErrors('cookTime'))? 'is-invalid':''}">
+                        <small id="helpCook" class="form-text text-muted" th:unless="${#fields.hasErrors('cookTime')}">How long to cook this recipe?</small>
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('cookTime')}">
+                            <ul>
+                                <li th:each="error : ${#fields.errors('cookTime')}" th:text="${error}"/>
+                            </ul>
+                        </div>
                     </div>
                     <div class="col-4 form-group">
                         <label th:for="difficulty">Difficulty</label>
@@ -78,8 +88,13 @@
                     </div>
                     <div class="col-4 form-group">
                         <label th:for="url">URL</label>
-                        <input type="text" class="form-control" th:field="*{url}" aria-describedby="helpUrl" placeholder="http://www.example.com/path/to/recipe">
-                        <small id="helpUrl" class="form-text text-muted">A link to the original recipe</small>
+                        <input type="text" class="form-control" th:field="*{url}" aria-describedby="helpUrl" placeholder="http://www.example.com/path/to/recipe" th:classappend="${(#fields.hasErrors('url'))? 'is-invalid':''}">
+                        <small id="helpUrl" class="form-text text-muted" th:unless="${#fields.hasErrors('url')}">A link to the original recipe</small>
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('url')}">
+                            <ul>
+                                <li th:each="error : ${#fields.errors('url')}" th:text="${error}"/>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -99,7 +114,13 @@
             <h4 class="card-header">Directions</h4>
             <div class="card-body">
                 <div class="form-group">
-                    <textarea class="form-control" th:field="*{directions}" rows="5"></textarea>
+                    <textarea class="form-control" th:field="*{directions}" rows="5" th:classappend="${(#fields.hasErrors('directions'))? 'is-invalid':''}"></textarea>
+                    <small id="helpDirections" class="form-text text-muted" th:unless="${#fields.hasErrors('directions')}">Indicate the various steps to prepare that recipe</small>
+                    <div class="invalid-feedback" th:if="${#fields.hasErrors('directions')}">
+                        <ul>
+                            <li th:each="error : ${#fields.errors('directions')}" th:text="${error}"/>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
