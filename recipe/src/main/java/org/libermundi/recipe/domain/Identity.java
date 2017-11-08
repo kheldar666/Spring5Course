@@ -3,6 +3,8 @@ package org.libermundi.recipe.domain;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
 import java.util.UUID;
@@ -11,6 +13,8 @@ import java.util.UUID;
 @Setter
 @ToString(of = "id")
 public abstract class Identity {
+
+    @Id
     private String id;
 
     private final String uuid = UUID.randomUUID().toString();
