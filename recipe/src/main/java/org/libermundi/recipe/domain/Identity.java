@@ -13,12 +13,8 @@ import java.util.UUID;
 @Getter
 @Setter
 @ToString(of = "id")
-@MappedSuperclass
-@EntityListeners(IdentityListener.class)
 public abstract class Identity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
 
     @Transient
     private final String uuid = UUID.randomUUID().toString();

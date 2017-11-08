@@ -3,17 +3,15 @@ package org.libermundi.recipe.controllers;
 
 import lombok.extern.slf4j.Slf4j;
 import org.libermundi.recipe.commands.RecipeCommand;
-import org.libermundi.recipe.converters.RecipeToRecipeCommand;
-import org.libermundi.recipe.domain.Recipe;
-import org.libermundi.recipe.exceptions.NotFoundException;
 import org.libermundi.recipe.services.RecipeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
 
@@ -28,14 +26,14 @@ public class RecipeController {
     }
 
     @GetMapping("recipe/{id}/show")
-    public String show(Model model, @PathVariable Long id) {
+    public String show(Model model, @PathVariable String id) {
         model.addAttribute("recipe",recipeService.findById(id));
 
         return "recipe/show";
     }
 
     @GetMapping("/recipe/{id}/edit")
-    public String edit(Model model, @PathVariable Long id) {
+    public String edit(Model model, @PathVariable String id) {
         RecipeCommand command = recipeService.findById(id);
         model.addAttribute("recipe",command);
         model.addAttribute("cancelUrl",getCancelUrl(command));
@@ -44,7 +42,7 @@ public class RecipeController {
     }
 
     @GetMapping("/recipe/{id}/delete")
-    public String delete(@PathVariable Long id) {
+    public String delete(@PathVariable String id) {
         recipeService.deleteById(id);
         return "redirect:/";
     }

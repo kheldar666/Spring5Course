@@ -8,7 +8,6 @@ import javax.persistence.Entity;
 @Setter
 @NoArgsConstructor
 @ToString(of = {"name"}, callSuper = true)
-@Entity
 public class UnitOfMeasure extends Identity{
     private String name;
 

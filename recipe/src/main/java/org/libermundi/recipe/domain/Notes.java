@@ -8,10 +8,8 @@ import javax.persistence.Lob;
 @Getter
 @Setter
 @NoArgsConstructor
-@Entity
 public class Notes extends Identity {
 
-    @Lob
     private String notes;
 
     public Notes(String notes) {

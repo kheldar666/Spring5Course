@@ -23,7 +23,7 @@ public class IngredientServiceImpl implements IngredientService {
         this.ingredientRepository = ingredientRepository;
     }
 
-    public IngredientCommand findIngredient(Long recipeId, Long ingredientId) {
+    public IngredientCommand findIngredient(String recipeId, String ingredientId) {
         RecipeCommand recipeCommand = recipeService.findById(recipeId);
 
         Optional<IngredientCommand> ingredientCommand = recipeCommand.getIngredients().stream().filter(
@@ -40,7 +40,7 @@ public class IngredientServiceImpl implements IngredientService {
 
     @Override
     @Transactional
-    public IngredientCommand saveIngredient(Long recipeId, IngredientCommand ingredient) {
+    public IngredientCommand saveIngredient(String recipeId, IngredientCommand ingredient) {
         RecipeCommand recipe = recipeService.findById(recipeId);
 
         recipe.getIngredients().add(ingredient);
@@ -52,7 +52,7 @@ public class IngredientServiceImpl implements IngredientService {
 
 
     @Override
-    public void deleteIngredient(Long recipeId, Long ingredientId) {
+    public void deleteIngredient(String recipeId, String ingredientId) {
         ingredientRepository.deleteByIdAndRecipeId(ingredientId,recipeId);
     }
 }

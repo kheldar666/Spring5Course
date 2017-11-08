@@ -26,7 +26,7 @@ public class IngredientController {
     }
 
     @GetMapping("/recipe/{recipeId}/ingredients/list")
-    public String list(Model model, @PathVariable Long recipeId) {
+    public String list(Model model, @PathVariable String recipeId) {
         RecipeCommand recipe = recipeService.findById(recipeId);
 
         model.addAttribute("recipe",recipe);
@@ -35,7 +35,7 @@ public class IngredientController {
     }
 
     @GetMapping("/recipe/{recipeId}/ingredients/{id}/edit")
-    public String edit(Model model, @PathVariable Long recipeId, @PathVariable Long id) {
+    public String edit(Model model, @PathVariable String recipeId, @PathVariable String id) {
         IngredientCommand ingredientCommand = ingredientService.findIngredient(recipeId,id);
         RecipeCommand recipeCommand = recipeService.findById(recipeId);
 
@@ -47,7 +47,7 @@ public class IngredientController {
     }
 
     @GetMapping("/recipe/{recipeId}/ingredients/add")
-    public String add(Model model, @PathVariable Long recipeId) {
+    public String add(Model model, @PathVariable String recipeId) {
         RecipeCommand recipeCommand = recipeService.findById(recipeId);
         IngredientCommand ingredientCommand = new IngredientCommand();
         ingredientCommand.setUnit(new UnitOfMeasureCommand());
@@ -60,14 +60,14 @@ public class IngredientController {
     }
 
     @GetMapping("/recipe/{recipeId}/ingredients/{id}/delete")
-    public String delete(@PathVariable Long recipeId, @PathVariable Long id) {
+    public String delete(@PathVariable String recipeId, @PathVariable String id) {
         ingredientService.deleteIngredient(recipeId,id);
 
         return "redirect:/recipe/" + recipeId + "/ingredients/list";
     }
 
     @PostMapping("/recipe/{recipeId}/ingredients/save")
-    public String save(@ModelAttribute IngredientCommand ingredient, @PathVariable Long recipeId) {
+    public String save(@ModelAttribute IngredientCommand ingredient, @PathVariable String recipeId) {
 
         ingredientService.saveIngredient(recipeId,ingredient);
 

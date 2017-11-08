@@ -4,9 +4,9 @@ import org.libermundi.recipe.commands.IngredientCommand;
 
 public interface IngredientService {
 
-    IngredientCommand findIngredient(Long recipeId, Long ingredientId);
+    IngredientCommand findIngredient(String recipeId, String ingredientId);
 
-    IngredientCommand saveIngredient(Long recipeId , IngredientCommand ingredient);
+    IngredientCommand saveIngredient(String recipeId , IngredientCommand ingredient);
 
-    void deleteIngredient(Long recipeId, Long ingredientId);
+    void deleteIngredient(String recipeId, String ingredientId);
 }

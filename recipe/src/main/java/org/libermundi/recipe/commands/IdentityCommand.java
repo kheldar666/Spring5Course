@@ -10,7 +10,7 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 public abstract class IdentityCommand {
-    private Long id;
+    private String id;
 
     @Transient
     private final String uuid = UUID.randomUUID().toString();

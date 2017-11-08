@@ -31,7 +31,7 @@ public class ImageController {
     }
 
     @GetMapping("/recipe/{id}/editimage")
-    public String image(Model model, @PathVariable Long id) {
+    public String image(Model model, @PathVariable String id) {
         RecipeCommand command = recipeService.findById(id);
         model.addAttribute("recipe",command);
         model.addAttribute("cancelUrl", getRecipeUrl(command));
@@ -40,7 +40,7 @@ public class ImageController {
     }
 
     @PostMapping("/recipe/{id}/editimage")
-    public String saveImage(@PathVariable Long id, @RequestParam("imagefile") MultipartFile file) {
+    public String saveImage(@PathVariable String id, @RequestParam("imagefile") MultipartFile file) {
 
         imageService.saveImage(id,file);
 
@@ -48,8 +48,8 @@ public class ImageController {
     }
 
     @GetMapping("/recipe/{id}/image")
-    public void renderImageFromDb(@PathVariable Long id, HttpServletResponse response) throws IOException {
-        RecipeCommand recipeCommand = recipeService.findById(Long.valueOf(id));
+    public void renderImageFromDb(@PathVariable String id, HttpServletResponse response) throws IOException {
+        RecipeCommand recipeCommand = recipeService.findById(id);
 
         if (recipeCommand.getImage() != null) {
             byte[] byteArray = new byte[recipeCommand.getImage().length];

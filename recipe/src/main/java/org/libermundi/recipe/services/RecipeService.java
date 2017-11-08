@@ -5,7 +5,7 @@ import org.libermundi.recipe.domain.Recipe;
 
 public interface RecipeService {
     Iterable<Recipe> getAllRecipes();
-    RecipeCommand findById(Long id);
+    RecipeCommand findById(String id);
     RecipeCommand saveRecipe(RecipeCommand recipeCommand);
-    void deleteById(Long id);
+    void deleteById(String id);
 }

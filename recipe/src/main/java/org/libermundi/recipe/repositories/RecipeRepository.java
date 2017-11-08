@@ -8,6 +8,6 @@ import java.util.Optional;
 
 
 @Repository
-public interface RecipeRepository extends CrudRepository<Recipe,Long> {
+public interface RecipeRepository extends CrudRepository<Recipe,String> {
     Optional<Recipe> findByName(String name);
 }
