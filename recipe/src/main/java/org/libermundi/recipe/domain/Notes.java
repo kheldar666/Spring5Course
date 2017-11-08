@@ -1,9 +1,8 @@
 package org.libermundi.recipe.domain;
 
-import lombok.*;
-
-import javax.persistence.Entity;
-import javax.persistence.Lob;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @Setter

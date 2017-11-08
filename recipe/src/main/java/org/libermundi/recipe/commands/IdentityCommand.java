@@ -1,8 +1,9 @@
 package org.libermundi.recipe.commands;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import javax.persistence.Transient;
 import java.util.Date;
 import java.util.UUID;
 
@@ -12,7 +13,6 @@ import java.util.UUID;
 public abstract class IdentityCommand {
     private String id;
 
-    @Transient
     private final String uuid = UUID.randomUUID().toString();
 
     private Date created;

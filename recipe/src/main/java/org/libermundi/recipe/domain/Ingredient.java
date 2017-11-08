@@ -1,10 +1,9 @@
 package org.libermundi.recipe.domain;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import java.math.BigDecimal;
 
 @Getter

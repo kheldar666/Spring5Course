@@ -1,12 +1,9 @@
 package org.libermundi.recipe.domain;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.libermundi.recipe.listeners.IdentityListener;
 
-import javax.persistence.*;
 import java.util.Date;
 import java.util.UUID;
 
@@ -16,7 +13,6 @@ import java.util.UUID;
 public abstract class Identity {
     private String id;
 
-    @Transient
     private final String uuid = UUID.randomUUID().toString();
 
     private Date created;
